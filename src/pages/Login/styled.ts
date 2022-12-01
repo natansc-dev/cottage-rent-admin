@@ -71,6 +71,20 @@ export const RightGrid = styled('div', {
     media: {
       lg: {
         padding: '5rem 0 0 8rem',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        img: {
+          width: 282,
+          height: 'auto',
+        },
+
+        h1: {
+          fontSize: '3.5rem',
+        },
+
+        p: {
+          fontSize: '1.25rem',
+        },
       },
     },
   },
@@ -81,7 +95,6 @@ export const LoginForm = styled('form', {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-
   width: '100%',
 
   input: {
@@ -128,7 +141,22 @@ export const LoginForm = styled('form', {
   variants: {
     media: {
       md: {},
-      lg: {},
+      lg: {
+        alignItems: 'flex-start',
+
+        input: {
+          height: '48px',
+          width: 428,
+          fontSize: '1.25rem',
+        },
+
+        button: {
+          height: '48px',
+          width: 428,
+          fontSize: '1rem',
+          padding: '0.25rem',
+        },
+      },
     },
   },
 })
