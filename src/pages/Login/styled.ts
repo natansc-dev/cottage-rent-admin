@@ -53,17 +53,17 @@ export const RightGrid = styled('div', {
   padding: '2rem',
 
   img: {
-    width: 282,
+    width: '92%',
     height: 'auto',
   },
 
   h1: {
-    fontSize: '2.5rem',
+    fontSize: '6.5rem',
     fontWeight: 800,
   },
 
   p: {
-    fontSize: '1.25rem',
+    fontSize: '2.25rem',
     marginBottom: '2.55rem',
   },
 
@@ -85,13 +85,14 @@ export const LoginForm = styled('form', {
   width: '100%',
 
   input: {
+    width: '100%',
+    height: '92px',
     padding: '1rem 0',
-    height: '48px',
     backgroundColor: 'transparent',
     border: 'none',
     borderBottom: '1px solid #e0e0e0',
 
-    fontSize: '1.25rem',
+    fontSize: '2.25rem',
     color: '#fcfcfc',
 
     '&:focus': {
@@ -106,15 +107,18 @@ export const LoginForm = styled('form', {
   },
 
   button: {
+    width: '100%',
     backgroundColor: '#060606',
     border: '2px solid #060606',
     color: 'white',
     borderRadius: '6px',
-    padding: '1.25rem 2.25rem',
+    padding: '2.25rem',
     marginTop: '3rem',
+    fontSize: '2rem',
 
     cursor: 'pointer',
     transition: 'all 0.2s ease -in -out',
+
     '&:hover': {
       backgroundColor: 'transparent',
       border: '2px solid #e0e0e0',
@@ -123,22 +127,8 @@ export const LoginForm = styled('form', {
 
   variants: {
     media: {
-      md: {
-        button: {
-          width: 428,
-        },
-        input: {
-          width: 428,
-        },
-      },
-      lg: {
-        button: {
-          width: 428,
-        },
-        input: {
-          width: 428,
-        },
-      },
+      md: {},
+      lg: {},
     },
   },
 })
