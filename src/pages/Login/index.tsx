@@ -1,4 +1,10 @@
-import { LeftGrid, LoginContainer, RightGrid, TopContent } from './styled'
+import {
+  LeftGrid,
+  LoginContainer,
+  LoginForm,
+  RightGrid,
+  TopContent,
+} from './styled'
 import logoImg from '../../../public/logo.png'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
@@ -24,8 +30,8 @@ export function Login() {
   }
 
   return (
-    <LoginContainer>
-      <LeftGrid>
+    <LoginContainer media={{ '@lg': 'lg' }}>
+      <LeftGrid media={{ '@lg': 'lg' }}>
         <h1>
           Torne suas ideias <br />
           em realidade
@@ -33,8 +39,8 @@ export function Login() {
         <p>Chame seus amigos e parentes e venha curtir na chácara Kaíros</p>
       </LeftGrid>
 
-      <RightGrid>
-        <TopContent>
+      <RightGrid media={{ '@lg': 'lg' }}>
+        <TopContent media={{ '@md': 'md' }}>
           <img src={logoImg} alt="" width={320} />
         </TopContent>
 
@@ -42,7 +48,7 @@ export function Login() {
 
         <p>Por favor, preencha com seu acesso.</p>
 
-        <form onSubmit={handleSubmit}>
+        <LoginForm onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="Usuário"
@@ -59,7 +65,7 @@ export function Login() {
           />
 
           <button type="submit">Log in</button>
-        </form>
+        </LoginForm>
       </RightGrid>
     </LoginContainer>
   )

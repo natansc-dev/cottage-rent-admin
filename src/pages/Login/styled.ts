@@ -1,194 +1,137 @@
-import styled from 'styled-components'
+import { styled } from '../../styles'
 
-export const LoginContainer = styled.main`
-  display: grid;
-  height: 100vh;
+export const LoginContainer = styled('section', {
+  display: 'grid',
+  height: '100vh',
+  gridTemplateColumns: 'repeat(1, 1fr)',
 
-  @media (min-width: 320px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
+  variants: {
+    media: {
+      lg: {
+        gridTemplateColumns: 'repeat(2, 1fr)',
+      },
+    },
+  },
+})
 
-  @media (min-width: 375px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
+export const LeftGrid = styled('div', {
+  flexDirection: 'column',
+  justifyContent: 'end',
+  padding: '5rem',
+  display: 'none',
+  color: '$white',
 
-  @media (min-width: 425px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
+  h1: {
+    fontSize: '2.5rem',
+    marginBottom: '1.25rem',
+  },
 
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  p: {
+    fontSize: '1.25rem',
+  },
 
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-`
+  variants: {
+    media: {
+      lg: {
+        display: 'flex',
+      },
+    },
+  },
+})
 
-export const LeftGrid = styled.div`
-  flex-direction: column;
-  justify-content: end;
-  padding: 5rem;
+export const RightGrid = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
 
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1.25rem;
-  }
+  background: 'rgba(41, 41, 41, 0.39)',
+  boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+  backdropFilter: 'blur(50px)',
 
-  p {
-    font-size: 1.25rem;
-  }
+  color: '$white',
+  padding: '1.25rem',
 
-  @media (min-width: 320px) {
-    display: none;
-  }
+  h1: {
+    fontSize: '2.5rem',
+    fontWeight: 800,
+  },
 
-  @media (min-width: 375px) {
-    display: none;
-  }
+  p: {
+    fontSize: '1.25rem',
+    marginBottom: '2.55rem',
+  },
 
-  @media (min-width: 425px) {
-    display: none;
-  }
+  variants: {
+    media: {
+      lg: {
+        padding: '5rem 0 0 8rem',
+      },
+    },
+  },
+})
 
-  @media (min-width: 768px) {
-    display: flex;
-    h1 {
-      font-size: 1.65rem;
-      font-weight: 800;
-    }
-    p {
-      font-size: 1rem;
-    }
-  }
+export const LoginForm = styled('form', {
+  display: 'flex',
+  flexDirection: 'column',
 
-  @media (min-width: 1024px) {
-    display: flex;
-  }
-`
+  input: {
+    padding: '1rem 0',
+    height: '48px',
+    backgroundColor: 'transparent',
+    border: 'none',
+    borderBottom: '1px solid #e0e0e0',
+    maxWidth: '430px',
 
-export const RightGrid = styled.div`
-  display: flex;
-  flex-direction: column;
+    fontSize: '1.25rem',
+    color: '#fcfcfc',
 
-  background: rgba(41, 41, 41, 0.39);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(50px);
-  -webkit-backdrop-filter: blur(50px);
+    '&:focus': {
+      border: 0,
+      outline: 'none',
+      borderBottom: '2px solid #348fc6',
+    },
+  },
 
-  h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-  }
+  'input + input': {
+    marginTop: '1rem',
+  },
 
-  p {
-    font-size: 1.25rem;
-    margin-bottom: 2.55rem;
-  }
+  button: {
+    backgroundColor: '#060606',
+    border: '2px solid #060606',
+    color: 'white',
+    borderRadius: '6px',
+    maxWidth: '430px',
+    padding: '1.25rem 2.25rem',
+    marginTop: '3rem',
 
-  form {
-    display: flex;
-    flex-direction: column;
+    cursor: 'pointer',
+    transition: 'all 0.2s ease -in -out',
+    '&:hover': {
+      backgroundColor: 'transparent',
+      border: '2px solid #e0e0e0',
+    },
+  },
+})
 
-    input {
-      padding: 1rem 0;
-      height: 48px;
-      background-color: transparent;
-      border: none;
-      border-bottom: 1px solid #e0e0e0;
-      max-width: 430px;
+export const TopContent = styled('form', {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px',
 
-      font-size: 1.25rem;
-      color: ${(props) => props.theme['gray-100']};
+  img: {
+    width: 280,
+  },
 
-      &:focus {
-        border: 0;
-        outline: none;
-        border-bottom: 2px solid #348fc6;
-      }
-    }
+  span: {
+    fontSize: '1.25rem',
+    fontWeight: 600,
+  },
 
-    input + input {
-      margin-top: 1rem;
-    }
-
-    button {
-      background-color: ${(props) => props.theme['gray-900']};
-      border: 2px solid ${(props) => props.theme['gray-900']};
-      color: white;
-      border-radius: 6px;
-      max-width: 430px;
-      padding: 1.25rem 2.25rem;
-      margin-top: 3rem;
-
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
-      &:hover {
-        background-color: transparent;
-        border: 2px solid #e0e0e0;
-      }
-    }
-  }
-
-  @media (min-width: 320px) {
-    padding: 1.25rem;
-  }
-
-  @media (min-width: 375px) {
-    padding: 1.25rem;
-  }
-
-  @media (min-width: 425px) {
-    padding: 1.25rem;
-  }
-
-  @media (min-width: 768px) {
-    padding-top: 5rem;
-    padding-left: 3rem;
-  }
-
-  @media (min-width: 1024px) {
-    padding-top: 5rem;
-    padding-left: 8rem;
-  }
-`
-
-export const TopContent = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  span {
-    font-size: 1.25rem;
-    font-weight: 600;
-  }
-
-  @media (min-width: 320px) {
-    margin-bottom: 2.5rem;
-    img {
-      width: 280px;
-    }
-  }
-
-  @media (min-width: 375px) {
-    margin-bottom: 2.5rem;
-    img {
-      width: 280px;
-    }
-  }
-
-  @media (min-width: 425px) {
-    margin-bottom: 2.5rem;
-    img {
-      width: 280px;
-    }
-  }
-
-  @media (min-width: 768px) {
-    margin-bottom: 7.5rem;
-  }
-
-  @media (min-width: 1024px) {
-    margin-bottom: 7.5rem;
-  }
-`
+  variants: {
+    media: {
+      md: {
+        marginBottom: '7.5rem',
+      },
+    },
+  },
+})
