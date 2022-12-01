@@ -1,5 +1,11 @@
-import { createContext, ReactNode } from 'react'
+import { createContext, ReactNode, useState } from 'react'
 import { api } from '../services/api'
+import { redirect } from 'react-router-dom'
+
+type User = {
+  email: string
+  name: string
+}
 
 type SignInCredentials = {
   username: string
@@ -18,15 +24,27 @@ type AuthProviderProps = {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  const [user, setUser] = useState<User>()
   const isAuthenticated = false
 
   async function signIn({ username, password }: SignInCredentials) {
-    const response = await api.post('sessions', {
-      username,
-      password,
-    })
+    try {
+      const response = await api.post('/sessions', {
+        username,
+        password,
+      })
 
-    console.log(response.data)
+      const { name, email } = response.data.user
+
+      setUser({
+        name,
+        email,
+      })
+
+      redirect('dashboard')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
