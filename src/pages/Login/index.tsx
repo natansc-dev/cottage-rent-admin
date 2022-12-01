@@ -1,11 +1,5 @@
-import {
-  LeftGrid,
-  LoginContainer,
-  LoginForm,
-  RightGrid,
-  TopContent,
-} from './styled'
-import logoImg from '../../../public/logo.png'
+import { LeftGrid, LoginContainer, LoginForm, RightGrid } from './styled'
+import logoImg from '../../assets/images/logo.png'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 
@@ -40,15 +34,13 @@ export function Login() {
       </LeftGrid>
 
       <RightGrid media={{ '@lg': 'lg' }}>
-        <TopContent media={{ '@md': 'md' }}>
-          <img src={logoImg} alt="" width={320} />
-        </TopContent>
+        <img src={logoImg} alt="" />
 
         <h1>Bem-vindo!</h1>
 
         <p>Por favor, preencha com seu acesso.</p>
 
-        <LoginForm onSubmit={handleSubmit}>
+        <LoginForm onSubmit={handleSubmit} media={{ '@md': 'md', '@lg': 'lg' }}>
           <input
             type="text"
             placeholder="Usuário"
