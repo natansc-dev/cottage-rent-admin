@@ -1,6 +1,15 @@
 import { styled } from '../../styles'
 
-export const LoginContainer = styled('section', {
+export const BackgroundImage = styled('div', {
+  width: '100vw',
+  height: '100vh',
+  backgroundImage: `url(/bg-login.jpg)`,
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center',
+})
+
+export const LoginContainer = styled('main', {
   height: '100vh',
 
   variants: {

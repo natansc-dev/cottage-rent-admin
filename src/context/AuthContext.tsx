@@ -16,7 +16,7 @@ type SignInCredentials = {
 type AuthContextData = {
   signIn(credentials: SignInCredentials): Promise<void>
   isAuthenticated: boolean
-  user: User
+  user: User | undefined
 }
 
 export const AuthContext = createContext({} as AuthContextData)
@@ -31,11 +31,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     '@reactauth.refresh_token',
   ])
 
-  const [user, setUser] = useState<User>({
-    email: '',
-    name: '',
-  })
-  const isAuthenticated = !!user.email
+  const [user, setUser] = useState<User>()
+  const isAuthenticated = !!user
 
   async function signIn({ username, password }: SignInCredentials) {
     try {
@@ -44,7 +41,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       })
 
-      const { token, refresh_token } = response.data
+      const {
+        token,
+        refresh_token,
+        user: { name, email },
+      } = response.data
 
       setCookie('@reactauth.token', token, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
@@ -56,11 +57,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
 
       setUser({
-        name: response.data.user.name,
-        email: response.data.user.name,
+        email,
+        name,
       })
-
-      window.location.href = '/dashboard'
     } catch (error) {
       console.log(error)
     }
