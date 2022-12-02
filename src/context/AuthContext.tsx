@@ -1,6 +1,7 @@
+/* eslint-disable camelcase */
 import { createContext, ReactNode, useState } from 'react'
 import { api } from '../services/api'
-import { redirect } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
 
 type User = {
   email: string
@@ -15,6 +16,7 @@ type SignInCredentials = {
 type AuthContextData = {
   signIn(credentials: SignInCredentials): Promise<void>
   isAuthenticated: boolean
+  user: User
 }
 
 export const AuthContext = createContext({} as AuthContextData)
@@ -24,8 +26,16 @@ type AuthProviderProps = {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User>()
-  const isAuthenticated = false
+  const [cookies, setCookie] = useCookies([
+    '@reactauth.token',
+    '@reactauth.refresh_token',
+  ])
+
+  const [user, setUser] = useState<User>({
+    email: '',
+    name: '',
+  })
+  const isAuthenticated = !!user.email
 
   async function signIn({ username, password }: SignInCredentials) {
     try {
@@ -34,21 +44,30 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       })
 
-      const { name, email } = response.data.user
+      const { token, refresh_token } = response.data
 
-      setUser({
-        name,
-        email,
+      setCookie('@reactauth.token', token, {
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+        path: '/',
+      })
+      setCookie('@reactauth.refresh_token', refresh_token, {
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+        path: '/',
       })
 
-      redirect('dashboard')
+      setUser({
+        name: response.data.user.name,
+        email: response.data.user.name,
+      })
+
+      window.location.href = '/dashboard'
     } catch (error) {
       console.log(error)
     }
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, isAuthenticated }}>
+    <AuthContext.Provider value={{ signIn, isAuthenticated, user }}>
       {children}
     </AuthContext.Provider>
   )
