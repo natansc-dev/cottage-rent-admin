@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import {
   InterestedContainer,
@@ -10,9 +10,35 @@ import {
   Text,
 } from './styles'
 import { Trash } from 'phosphor-react'
+import { api } from '../../services/api'
+import ptBR from 'date-fns/locale/pt-BR'
+import { format } from 'date-fns'
+
+interface InterestedProps {
+  id: string
+  start_at: string
+  end_at: string
+  name: string
+  phone: string
+}
 
 export function Dashboard() {
   const { user } = useContext(AuthContext)
+  const [interested, setInterested] = useState<InterestedProps[]>([])
+
+  async function getInterests() {
+    try {
+      const response = await api.get('/interests/all')
+
+      setInterested(response.data)
+    } catch (error) {
+      alert('Falha!')
+    }
+  }
+
+  useEffect(() => {
+    getInterests()
+  }, [])
 
   return (
     <TabsRoot defaultValue="tab1">
@@ -40,50 +66,21 @@ export function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Natan Cardoso</td>
-                  <td>(19) 9 8260-6755</td>
-                  <td>10/12/2022</td>
-                  <td>12/12/2022</td>
-                  <td>
-                    <button>
-                      <Trash size={24} />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Natan Cardoso</td>
-                  <td>(19) 9 8260-6755</td>
-                  <td>10/12/2022</td>
-                  <td>12/12/2022</td>
-                  <td>
-                    <button>
-                      <Trash size={24} />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Natan Cardoso</td>
-                  <td>(19) 9 8260-6755</td>
-                  <td>10/12/2022</td>
-                  <td>12/12/2022</td>
-                  <td>
-                    <button>
-                      <Trash size={24} />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Natan Cardoso</td>
-                  <td>(19) 9 8260-6755</td>
-                  <td>10/12/2022</td>
-                  <td>12/12/2022</td>
-                  <td>
-                    <button>
-                      <Trash size={24} />
-                    </button>
-                  </td>
-                </tr>
+                {interested.map((i) => {
+                  return (
+                    <tr key={i.id}>
+                      <td>{i.name}</td>
+                      <td>{i.phone}</td>
+                      <td>{format(new Date(i.start_at), 'dd/MM/yyyy')}</td>
+                      <td>{format(new Date(i.end_at), 'dd/MM/yyyy')}</td>
+                      <td>
+                        <button>
+                          <Trash size={24} />
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </InterestedList>

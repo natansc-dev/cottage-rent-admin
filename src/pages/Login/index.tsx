@@ -9,25 +9,33 @@ import logoImg from '../../assets/images/logo.png'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { Navigate } from 'react-router-dom'
+import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Controller, useForm } from 'react-hook-form'
+
+const loginFormSchema = z.object({
+  username: z.string(),
+  password: z.string(),
+})
+
+type loginFormInputs = z.infer<typeof loginFormSchema>
 
 export function Login() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
   const { user, signIn } = useContext(AuthContext)
 
-  async function handleSubmit() {
-    event?.preventDefault()
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+    reset,
+  } = useForm<loginFormInputs>({
+    resolver: zodResolver(loginFormSchema),
+  })
 
-    const data = {
-      username,
-      password,
-    }
-
+  async function handleLogin(data: loginFormInputs) {
     await signIn(data)
 
-    setUsername('')
-    setPassword('')
+    reset()
   }
 
   return (
@@ -40,6 +48,7 @@ export function Login() {
               Torne suas ideias <br />
               em realidade
             </h1>
+
             <p>Chame seus amigos e parentes e venha curtir na chácara Kaíros</p>
           </LeftGrid>
 
@@ -51,25 +60,26 @@ export function Login() {
             <p>Por favor, preencha com seu acesso.</p>
 
             <LoginForm
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmit(handleLogin)}
               media={{ '@md': 'md', '@lg': 'lg' }}
             >
               <input
                 type="text"
                 placeholder="Usuário"
                 required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                {...register('username')}
               />
+
               <input
                 type="password"
                 placeholder="Senha"
                 required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                {...register('password')}
               />
 
-              <button type="submit">Log in</button>
+              <button type="submit" disabled={isSubmitting}>
+                Log in
+              </button>
             </LoginForm>
           </RightGrid>
         </LoginContainer>

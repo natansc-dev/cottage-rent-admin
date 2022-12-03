@@ -33,9 +33,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const token = Cookies.get('reactauth.token')
 
     if (token) {
-      api.get('/me').then((response) => {
-        console.log(response)
-      })
+      // api.get('/me').then((response) => {
+      //   console.log(response)
+      // })
     }
   }, [])
 

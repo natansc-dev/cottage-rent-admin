@@ -145,6 +145,16 @@ export const LoginForm = styled('form', {
       backgroundColor: 'transparent',
       border: '2px solid #e0e0e0',
     },
+
+    '&:disabled': {
+      opacity: '0.7',
+      cursor: 'not-allowed',
+    },
+
+    '&:not(:disabled):hover': {
+      backgroundColor: 'transparent',
+      border: '2px solid #e0e0e0',
+    },
   },
 
   variants: {
