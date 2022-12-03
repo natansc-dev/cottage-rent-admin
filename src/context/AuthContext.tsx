@@ -30,7 +30,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const isAuthenticated = !!user
 
   useEffect(() => {
-    const token = Cookies.get('@reactauth.token')
+    const token = Cookies.get('reactauth.token')
 
     if (token) {
       api.get('/me').then((response) => {
@@ -52,13 +52,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
         user: { name, email },
       } = response.data
 
-      Cookies.set('@reactauth.token', token, {
-        maxAge: 60 * 60 * 24 * 30, // 30 days
+      Cookies.set('reactauth.token', token, {
+        expires: 1, // 1 day
         path: '/',
       })
 
-      Cookies.set('@reactauth.refresh_token', refresh_token, {
-        maxAge: 60 * 60 * 24 * 30, // 30 days
+      Cookies.set('reactauth.refresh_token', refresh_token, {
+        expires: 1, // 1 day
         path: '/',
       })
 
