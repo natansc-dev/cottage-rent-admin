@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { api } from '../services/api'
 import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom'
 
 type User = {
   email: string
@@ -27,6 +28,7 @@ type AuthProviderProps = {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User>()
   const isAuthenticated = !!user
+  const navigate = useNavigate()
 
   useEffect(() => {
     const token = Cookies.get('reactauth.token')
@@ -43,7 +45,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           Cookies.remove('reactauth.token', { path: '/' })
           Cookies.remove('reactauth.refresh_token', { path: '/' })
 
-          window.location.href = '/erro'
+          navigate('/')
         })
     }
   }, [])
@@ -78,6 +80,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
 
       api.defaults.headers.Authorization = `Bearer ${token}`
+
+      navigate('dashboard')
     } catch (error) {
       console.log(error)
     }
