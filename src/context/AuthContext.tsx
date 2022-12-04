@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { api } from '../services/api'
 import Cookies from 'js-cookie'
@@ -33,9 +32,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const token = Cookies.get('reactauth.token')
 
     if (token) {
-      // api.get('/me').then((response) => {
-      //   console.log(response)
-      // })
+      api
+        .get('/users/me')
+        .then((response) => {
+          const { email, name } = response.data
+
+          setUser({ email, name })
+        })
+        .catch(() => {
+          Cookies.remove('reactauth.token', { path: '/' })
+          Cookies.remove('reactauth.refresh_token', { path: '/' })
+
+          window.location.href = '/erro'
+        })
     }
   }, [])
 
@@ -48,6 +57,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const {
         token,
+        // eslint-disable-next-line camelcase
         refresh_token,
         user: { name, email },
       } = response.data
@@ -66,6 +76,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         email,
         name,
       })
+
+      api.defaults.headers.Authorization = `Bearer ${token}`
     } catch (error) {
       console.log(error)
     }
