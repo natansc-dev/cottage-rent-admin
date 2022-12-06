@@ -1,5 +1,5 @@
 import { styled } from '@stitches/react'
-import { mauve, blackA, gray, blue, red } from '@radix-ui/colors'
+import { mauve, gray, blue } from '@radix-ui/colors'
 import * as Tabs from '@radix-ui/react-tabs'
 
 export const TabsRoot = styled(Tabs.Root, {
@@ -53,4 +53,26 @@ export const Text = styled('p', {
   color: mauve.mauve11,
   fontSize: 15,
   lineHeight: 1.5,
+})
+
+export const SignOutButton = styled('button', {
+  all: 'unset',
+  lineHeight: 0,
+  cursor: 'pointer',
+  padding: '0.4rem',
+  borderRadius: 6,
+
+  svg: {
+    color: `${blue.blue10}`,
+  },
+})
+
+export const Header = styled('header', {
+  margin: '1rem 0',
+  display: 'flex',
+
+  img: {
+    margin: '0 auto',
+    width: 128,
+  },
 })

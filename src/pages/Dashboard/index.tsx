@@ -1,33 +1,49 @@
-import { useContext } from 'react'
+import { SignOut } from 'phosphor-react'
 import { InterestsTap } from '../../components/InterestsTab'
 import { ReservationsTab } from '../../components/ReservationsTab'
-import { AuthContext } from '../../context/AuthContext'
-import { TabsContent, TabsList, TabsRoot, TabsTrigger, Text } from './styles'
+import {
+  Header,
+  SignOutButton,
+  TabsContent,
+  TabsList,
+  TabsRoot,
+  TabsTrigger,
+  Text,
+} from './styles'
+import logoImg from '../../assets/images/logo.png'
 
 export function Dashboard() {
-  const { user } = useContext(AuthContext)
-
   return (
-    <TabsRoot defaultValue="tab1">
-      <TabsList aria-label="Manage your account">
-        <TabsTrigger value="tab1">Interessados(a)</TabsTrigger>
+    <>
+      <Header>
+        <img src={logoImg} alt="" />
 
-        <TabsTrigger value="tab2">Reservas</TabsTrigger>
+        <SignOutButton onClick={() => console.log('teste')}>
+          <SignOut size={24} />
+        </SignOutButton>
+      </Header>
 
-        <TabsTrigger value="tab3">Pacotes</TabsTrigger>
-      </TabsList>
+      <TabsRoot defaultValue="tab1">
+        <TabsList aria-label="Manage your account">
+          <TabsTrigger value="tab1">Interessados(a)</TabsTrigger>
 
-      <TabsContent value="tab1">
-        <InterestsTap />
-      </TabsContent>
+          <TabsTrigger value="tab2">Reservas</TabsTrigger>
 
-      <TabsContent value="tab2">
-        <ReservationsTab />
-      </TabsContent>
+          <TabsTrigger value="tab3">Pacotes</TabsTrigger>
+        </TabsList>
 
-      <TabsContent value="tab3">
-        <Text>Em breve</Text>
-      </TabsContent>
-    </TabsRoot>
+        <TabsContent value="tab1">
+          <InterestsTap />
+        </TabsContent>
+
+        <TabsContent value="tab2">
+          <ReservationsTab />
+        </TabsContent>
+
+        <TabsContent value="tab3">
+          <Text>Em breve</Text>
+        </TabsContent>
+      </TabsRoot>
+    </>
   )
 }

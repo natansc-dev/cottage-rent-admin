@@ -2,7 +2,9 @@ import { format } from 'date-fns'
 import { Trash, Pencil } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 import { api } from '../../services/api'
-import { ActionButton, InterestedContainer, InterestedList } from './styles'
+import { AlertDialogComponent } from '../AlertDialog'
+import { TooltipComponent } from '../Tooltip'
+import { ActionGroup, InterestedContainer, InterestedList } from './styles'
 
 interface ReservationProps {
   id: string
@@ -60,13 +62,15 @@ export function ReservationsTab() {
                   <td>{format(new Date(i.start_at), 'dd/MM/yyyy')}</td>
                   <td>{format(new Date(i.end_at), 'dd/MM/yyyy')}</td>
                   <td>
-                    <ActionButton color="yellow">
-                      <Pencil size={24} />
-                    </ActionButton>
+                    <ActionGroup>
+                      <TooltipComponent label="Editar" color="yellow">
+                        <Pencil size={24} />
+                      </TooltipComponent>
 
-                    <ActionButton color="red">
-                      <Trash size={24} />
-                    </ActionButton>
+                      <TooltipComponent label="Deletar" color="red">
+                        <Trash size={24} />
+                      </TooltipComponent>
+                    </ActionGroup>
                   </td>
                 </tr>
               )

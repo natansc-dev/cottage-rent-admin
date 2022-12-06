@@ -20,7 +20,7 @@ const loginFormSchema = z.object({
 type loginFormInputs = z.infer<typeof loginFormSchema>
 
 export function Login() {
-  const { signIn } = useContext(AuthContext)
+  const { SignIn } = useContext(AuthContext)
 
   const {
     register,
@@ -32,7 +32,7 @@ export function Login() {
   })
 
   async function handleLogin(data: loginFormInputs) {
-    await signIn(data)
+    await SignIn(data)
 
     reset()
   }

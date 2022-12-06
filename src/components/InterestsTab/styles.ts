@@ -89,3 +89,8 @@ export const ActionButton = styled('button', {
     marginLeft: 8,
   },
 })
+
+export const ActionGroup = styled('span', {
+  display: 'flex',
+  gap: 8,
+})

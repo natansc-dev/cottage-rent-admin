@@ -2,7 +2,13 @@ import { format } from 'date-fns'
 import { Trash } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 import { api } from '../../services/api'
-import { ActionButton, InterestedContainer, InterestedList } from './styles'
+import { TooltipComponent } from '../Tooltip'
+import {
+  ActionButton,
+  ActionGroup,
+  InterestedContainer,
+  InterestedList,
+} from './styles'
 
 interface InterestedProps {
   id: string
@@ -53,9 +59,11 @@ export function InterestsTap() {
                   <td>{format(new Date(i.start_at), 'dd/MM/yyyy')}</td>
                   <td>{format(new Date(i.end_at), 'dd/MM/yyyy')}</td>
                   <td>
-                    <ActionButton color="red">
-                      <Trash size={24} />
-                    </ActionButton>
+                    <ActionGroup>
+                      <TooltipComponent label="Deletar" color="red">
+                        <Trash size={24} />
+                      </TooltipComponent>
+                    </ActionGroup>
                   </td>
                 </tr>
               )

@@ -14,7 +14,7 @@ type SignInCredentials = {
 }
 
 type AuthContextData = {
-  signIn(credentials: SignInCredentials): Promise<void>
+  SignIn(credentials: SignInCredentials): Promise<void>
   isAuthenticated: boolean
   user: User | undefined
 }
@@ -23,6 +23,15 @@ export const AuthContext = createContext({} as AuthContextData)
 
 type AuthProviderProps = {
   children: ReactNode
+}
+
+export function SignOut() {
+  const navigate = useNavigate()
+
+  Cookies.remove('reactauth.token', { path: '/' })
+  Cookies.remove('reactauth.refresh_token', { path: '/' })
+
+  navigate('/')
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
@@ -42,15 +51,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
           setUser({ email, name })
         })
         .catch(() => {
-          Cookies.remove('reactauth.token', { path: '/' })
-          Cookies.remove('reactauth.refresh_token', { path: '/' })
-
-          navigate('/')
+          SignOut()
         })
     }
   }, [])
 
-  async function signIn({ username, password }: SignInCredentials) {
+  async function SignIn({ username, password }: SignInCredentials) {
     try {
       const response = await api.post('/sessions', {
         username,
@@ -88,7 +94,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, isAuthenticated, user }}>
+    <AuthContext.Provider value={{ SignIn, isAuthenticated, user }}>
       {children}
     </AuthContext.Provider>
   )

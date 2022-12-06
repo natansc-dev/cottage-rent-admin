@@ -4,6 +4,7 @@ import axios, {
   AxiosResponseHeaders,
 } from 'axios'
 import Cookies from 'js-cookie'
+import { SignOut } from '../context/AuthContext'
 
 interface ErrorMessage extends AxiosError {
   response: {
@@ -91,8 +92,10 @@ api.interceptors.response.use(
           })
         })
       } else {
-        console.log('else')
+        SignOut()
       }
     }
+
+    return Promise.reject(error)
   },
 )
