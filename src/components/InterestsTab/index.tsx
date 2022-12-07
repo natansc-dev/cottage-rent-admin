@@ -3,6 +3,7 @@ import { Trash } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 import { api } from '../../services/api'
 import AlertDialogDemo from '../AlertDialog'
+import { Modal } from '../Modal'
 import { TooltipComponent } from '../Tooltip'
 import {
   ActionButton,
@@ -39,7 +40,9 @@ export function InterestsTap() {
   return (
     <InterestedContainer>
       <h1>Lista de Interessados(a)</h1>
-
+      <Modal>
+        <button>Adicionar Interessado</button>
+      </Modal>
       <InterestedList>
         <table>
           <thead>
@@ -60,10 +63,11 @@ export function InterestsTap() {
                   <td>{format(new Date(i.start_at), 'dd/MM/yyyy')}</td>
                   <td>{format(new Date(i.end_at), 'dd/MM/yyyy')}</td>
                   <td>
-                    <AlertDialogDemo />
                     <ActionGroup>
                       <TooltipComponent label="Deletar" color="red">
-                        <Trash size={24} />
+                        <AlertDialogDemo id={i.id} remove={'interest'}>
+                          <Trash size={24} />
+                        </AlertDialogDemo>
                       </TooltipComponent>
                     </ActionGroup>
                   </td>

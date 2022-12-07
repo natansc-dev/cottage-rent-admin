@@ -1,6 +1,6 @@
 import * as Tooltip from '@radix-ui/react-tooltip'
 import { ReactNode } from 'react'
-// import { AlertDialogComponent } from '../AlertDialog'
+import AlertDialogDemo from '../AlertDialog'
 import { IconButton, TooltipArrow, TooltipContent } from './styles'
 
 interface TooltipProps {
@@ -14,13 +14,7 @@ export function TooltipComponent({ children, label, color }: TooltipProps) {
     <Tooltip.Provider>
       <Tooltip.Root>
         <Tooltip.Trigger asChild>
-          {label === 'Deletar' ? (
-            // <AlertDialogComponent>
-            <IconButton color={color}>{children}</IconButton>
-          ) : (
-            // </AlertDialogComponent>
-            <IconButton color={color}>{children}</IconButton>
-          )}
+          <IconButton color={color}>{children}</IconButton>
         </Tooltip.Trigger>
 
         <Tooltip.Portal>

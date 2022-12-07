@@ -2,11 +2,35 @@ import React, { ReactNode } from 'react'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
 import { styled, keyframes } from '@stitches/react'
 import { violet, blackA, red, mauve } from '@radix-ui/colors'
+import { DeleteInterest } from '../../services/interests/delete'
 interface AlertDialogProps {
   children: ReactNode
+  remove?: 'interest' | 'reservation' | 'package'
+  id: string
 }
 
-export default function AlertDialogDemo({ children }: AlertDialogProps) {
+export default function AlertDialogDemo({
+  id,
+  remove,
+  children,
+}: AlertDialogProps) {
+  async function handleDelete() {
+    switch (remove) {
+      case 'interest':
+        await DeleteInterest(id)
+        break
+
+      case 'reservation':
+        break
+
+      case 'package':
+        break
+
+      default:
+        break
+    }
+  }
+
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger asChild>{children}</AlertDialog.Trigger>
@@ -28,7 +52,9 @@ export default function AlertDialogDemo({ children }: AlertDialogProps) {
             </AlertDialog.Cancel>
 
             <AlertDialog.Action asChild>
-              <Button variant="red">Sim, deletar interessado(a)</Button>
+              <Button variant="red" onClick={handleDelete}>
+                Sim, deletar interessado(a)
+              </Button>
             </AlertDialog.Action>
           </Flex>
         </AlertDialogContent>

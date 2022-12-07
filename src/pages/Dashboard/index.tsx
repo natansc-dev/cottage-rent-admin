@@ -11,14 +11,25 @@ import {
   Text,
 } from './styles'
 import logoImg from '../../assets/images/logo.png'
+import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 export function Dashboard() {
+  const navigate = useNavigate()
+
+  function handleLogoff() {
+    Cookies.remove('reactauth.token', { path: '/' })
+    Cookies.remove('reactauth.refresh_token', { path: '/' })
+
+    navigate('/')
+  }
+
   return (
     <>
       <Header>
         <img src={logoImg} alt="" />
 
-        <SignOutButton onClick={() => console.log('desloguei')}>
+        <SignOutButton onClick={handleLogoff}>
           <SignOut size={24} />
         </SignOutButton>
       </Header>

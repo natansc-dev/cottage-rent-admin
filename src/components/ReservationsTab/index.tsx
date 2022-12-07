@@ -73,6 +73,7 @@ export function ReservationsTab() {
                       <TooltipComponent label="Editar" color="yellow">
                         <Pencil size={24} />
                       </TooltipComponent>
+
                       <TooltipComponent label="Deletar" color="red">
                         <AlertDialogDemo>
                           <Trash size={24} />
