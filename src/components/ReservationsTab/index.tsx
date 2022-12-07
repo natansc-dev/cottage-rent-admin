@@ -1,10 +1,12 @@
 import { format } from 'date-fns'
 import { Trash, Pencil } from 'phosphor-react'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { api } from '../../services/api'
-import { AlertDialogComponent } from '../AlertDialog'
+import AlertDialogDemo from '../AlertDialog'
 import { TooltipComponent } from '../Tooltip'
 import { ActionGroup, InterestedContainer, InterestedList } from './styles'
+import Cookies from 'js-cookie'
 
 interface ReservationProps {
   id: string
@@ -22,6 +24,8 @@ interface ReservationProps {
 }
 
 export function ReservationsTab() {
+  const navigate = useNavigate()
+
   const [reservation, setReservation] = useState<ReservationProps[]>([])
 
   async function getReservations() {
@@ -30,7 +34,10 @@ export function ReservationsTab() {
 
       setReservation(response.data)
     } catch (error) {
-      alert('Falha!')
+      Cookies.remove('reactauth.token', { path: '/' })
+      Cookies.remove('reactauth.refresh_token', { path: '/' })
+
+      navigate('/')
     }
   }
 
@@ -66,9 +73,10 @@ export function ReservationsTab() {
                       <TooltipComponent label="Editar" color="yellow">
                         <Pencil size={24} />
                       </TooltipComponent>
-
                       <TooltipComponent label="Deletar" color="red">
-                        <Trash size={24} />
+                        <AlertDialogDemo>
+                          <Trash size={24} />
+                        </AlertDialogDemo>
                       </TooltipComponent>
                     </ActionGroup>
                   </td>

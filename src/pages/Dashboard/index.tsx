@@ -18,7 +18,7 @@ export function Dashboard() {
       <Header>
         <img src={logoImg} alt="" />
 
-        <SignOutButton onClick={() => console.log('teste')}>
+        <SignOutButton onClick={() => console.log('desloguei')}>
           <SignOut size={24} />
         </SignOutButton>
       </Header>

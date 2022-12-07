@@ -1,5 +1,5 @@
 import { styled, keyframes } from '@stitches/react'
-import { blackA, violet, blue, red, yellow } from '@radix-ui/colors'
+import { blackA, red, yellow } from '@radix-ui/colors'
 
 import * as Tooltip from '@radix-ui/react-tooltip'
 
@@ -51,7 +51,7 @@ export const TooltipArrow = styled(Tooltip.Arrow, {
 export const IconButton = styled('button', {
   all: 'unset',
   fontFamily: 'inherit',
-  borderRadius: '100%',
+  borderRadius: 6,
   height: 35,
   width: 35,
   display: 'inline-flex',
@@ -67,12 +67,14 @@ export const IconButton = styled('button', {
         background: `${red.red8}`,
         '&:hover': {
           background: `${red.red7}`,
+          color: `${blackA.blackA10}`,
         },
       },
       yellow: {
         background: `${yellow.yellow8}`,
         '&:hover': {
           background: `${yellow.yellow7}`,
+          color: `${blackA.blackA10}`,
         },
       },
     },

@@ -4,7 +4,7 @@ import axios, {
   AxiosResponseHeaders,
 } from 'axios'
 import Cookies from 'js-cookie'
-import { SignOut } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 interface ErrorMessage extends AxiosError {
   response: {
@@ -29,12 +29,10 @@ export const api = axios.create({
 })
 
 api.interceptors.response.use(
-  (response) => {
-    return response
-  },
+  (response) => response,
   (error: ErrorMessage) => {
-    if (error.response?.status === 401) {
-      if (error.response?.data?.message === 'Invalid token') {
+    if (error.response.status === 401) {
+      if (error.response.data.message === 'Invalid token') {
         const refreshToken = Cookies.get('reactauth.refresh_token')
         const originalConfig = error.config
 
@@ -92,7 +90,12 @@ api.interceptors.response.use(
           })
         })
       } else {
-        SignOut()
+        const navigate = useNavigate()
+
+        Cookies.remove('reactauth.token', { path: '/' })
+        Cookies.remove('reactauth.refresh_token', { path: '/' })
+
+        navigate('/')
       }
     }
 

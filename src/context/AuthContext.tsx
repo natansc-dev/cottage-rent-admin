@@ -25,15 +25,6 @@ type AuthProviderProps = {
   children: ReactNode
 }
 
-export function SignOut() {
-  const navigate = useNavigate()
-
-  Cookies.remove('reactauth.token', { path: '/' })
-  Cookies.remove('reactauth.refresh_token', { path: '/' })
-
-  navigate('/')
-}
-
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User>()
   const isAuthenticated = !!user
@@ -51,7 +42,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
           setUser({ email, name })
         })
         .catch(() => {
-          SignOut()
+          Cookies.remove('reactauth.token', { path: '/' })
+          Cookies.remove('reactauth.refresh_token', { path: '/' })
+
+          navigate('/')
         })
     }
   }, [])
