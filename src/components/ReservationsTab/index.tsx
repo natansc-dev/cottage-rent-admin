@@ -75,7 +75,7 @@ export function ReservationsTab() {
                       </TooltipComponent>
 
                       <TooltipComponent label="Deletar" color="red">
-                        <AlertDialogDemo>
+                        <AlertDialogDemo id={i.id} remove={'reservation'}>
                           <Trash size={24} />
                         </AlertDialogDemo>
                       </TooltipComponent>
