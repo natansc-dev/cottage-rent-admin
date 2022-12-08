@@ -5,16 +5,15 @@ import { IconButton, TooltipArrow, TooltipContent } from './styles'
 
 interface TooltipProps {
   children: ReactNode
-  label: 'Editar' | 'Deletar'
-  color: 'yellow' | 'red'
+  label: 'criar' | 'editar' | 'deletar'
 }
 
-export function TooltipComponent({ children, label, color }: TooltipProps) {
+export function TooltipComponent({ children, label }: TooltipProps) {
   return (
     <Tooltip.Provider>
       <Tooltip.Root>
         <Tooltip.Trigger asChild>
-          <IconButton color={color}>{children}</IconButton>
+          <IconButton color={label}>{children}</IconButton>
         </Tooltip.Trigger>
 
         <Tooltip.Portal>

@@ -70,11 +70,11 @@ export function ReservationsTab() {
                   <td>{format(new Date(i.end_at), 'dd/MM/yyyy')}</td>
                   <td>
                     <ActionGroup>
-                      <TooltipComponent label="Editar" color="yellow">
+                      <TooltipComponent label="editar">
                         <Pencil size={24} />
                       </TooltipComponent>
 
-                      <TooltipComponent label="Deletar" color="red">
+                      <TooltipComponent label="deletar">
                         <AlertDialogDemo id={i.id} remove={'reservation'}>
                           <Trash size={24} />
                         </AlertDialogDemo>

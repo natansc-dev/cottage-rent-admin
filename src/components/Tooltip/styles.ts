@@ -1,5 +1,5 @@
 import { styled, keyframes } from '@stitches/react'
-import { blackA, red, yellow } from '@radix-ui/colors'
+import { blackA, red, yellow, green } from '@radix-ui/colors'
 
 import * as Tooltip from '@radix-ui/react-tooltip'
 
@@ -63,17 +63,24 @@ export const IconButton = styled('button', {
 
   variants: {
     color: {
-      red: {
-        background: `${red.red8}`,
+      criar: {
+        background: `${green.green8}`,
         '&:hover': {
-          background: `${red.red7}`,
+          background: `${green.green7}`,
           color: `${blackA.blackA10}`,
         },
       },
-      yellow: {
+      editar: {
         background: `${yellow.yellow8}`,
         '&:hover': {
           background: `${yellow.yellow7}`,
+          color: `${blackA.blackA10}`,
+        },
+      },
+      deletar: {
+        background: `${red.red8}`,
+        '&:hover': {
+          background: `${red.red7}`,
           color: `${blackA.blackA10}`,
         },
       },

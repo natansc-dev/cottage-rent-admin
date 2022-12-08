@@ -1,16 +1,12 @@
 import { format } from 'date-fns'
-import { Trash } from 'phosphor-react'
+import { CalendarCheck, Trash } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 import { api } from '../../services/api'
 import AlertDialogDemo from '../AlertDialog'
-import { Modal } from '../Modal'
+import * as Dialog from '@radix-ui/react-dialog'
 import { TooltipComponent } from '../Tooltip'
-import {
-  ActionButton,
-  ActionGroup,
-  InterestedContainer,
-  InterestedList,
-} from './styles'
+import { ActionGroup, InterestedContainer, InterestedList } from './styles'
+import { Modal } from '../Modal'
 
 interface InterestedProps {
   id: string
@@ -40,9 +36,7 @@ export function InterestsTap() {
   return (
     <InterestedContainer>
       <h1>Lista de Interessados(a)</h1>
-      <Modal>
-        <button>Adicionar Interessado</button>
-      </Modal>
+
       <InterestedList>
         <table>
           <thead>
@@ -64,10 +58,20 @@ export function InterestsTap() {
                   <td>{format(new Date(i.end_at), 'dd/MM/yyyy')}</td>
                   <td>
                     <ActionGroup>
-                      <TooltipComponent label="Deletar" color="red">
+                      <TooltipComponent label="deletar">
                         <AlertDialogDemo id={i.id} remove={'interest'}>
                           <Trash size={24} />
                         </AlertDialogDemo>
+                      </TooltipComponent>
+
+                      <TooltipComponent label="criar">
+                        <Dialog.Root>
+                          <Dialog.Trigger asChild>
+                            <CalendarCheck size={24} />
+                          </Dialog.Trigger>
+
+                          <Modal data={i} />
+                        </Dialog.Root>
                       </TooltipComponent>
                     </ActionGroup>
                   </td>
