@@ -1,19 +1,14 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
 import { styled, keyframes } from '@stitches/react'
 import { violet, blackA, red, mauve } from '@radix-ui/colors'
 import { DeleteInterest } from '../../services/interests/delete'
-interface AlertDialogProps {
-  children: ReactNode
+interface DeleteModalProps {
   remove?: 'interest' | 'reservation' | 'package'
   id: string
 }
 
-export default function AlertDialogDemo({
-  id,
-  remove,
-  children,
-}: AlertDialogProps) {
+export default function DeleteModal({ id, remove }: DeleteModalProps) {
   async function handleDelete() {
     switch (remove) {
       case 'interest':
@@ -32,34 +27,27 @@ export default function AlertDialogDemo({
   }
 
   return (
-    <AlertDialog.Root>
-      <AlertDialog.Trigger asChild>{children}</AlertDialog.Trigger>
-      <AlertDialog.Portal>
-        <AlertDialogOverlay />
-        <AlertDialogContent>
-          <AlertDialogTitle>Você tem certeza absoluta?</AlertDialogTitle>
+    <AlertDialog.Portal>
+      <AlertDialogOverlay />
 
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </AlertDialogDescription>
+      <AlertDialogContent>
+        <AlertDialogTitle>Você tem certeza absoluta?</AlertDialogTitle>
 
-          <Flex css={{ justifyContent: 'flex-end' }}>
-            <AlertDialog.Cancel asChild>
-              <Button variant="mauve" css={{ marginRight: 25 }}>
-                Cancelar
-              </Button>
-            </AlertDialog.Cancel>
+        <Flex css={{ justifyContent: 'flex-end' }}>
+          <AlertDialog.Cancel asChild>
+            <Button variant="mauve" css={{ marginRight: 25 }}>
+              Cancelar
+            </Button>
+          </AlertDialog.Cancel>
 
-            <AlertDialog.Action asChild>
-              <Button variant="red" onClick={handleDelete}>
-                Sim, deletar interessado(a)
-              </Button>
-            </AlertDialog.Action>
-          </Flex>
-        </AlertDialogContent>
-      </AlertDialog.Portal>
-    </AlertDialog.Root>
+          <AlertDialog.Action asChild>
+            <Button variant="red" onClick={handleDelete}>
+              Sim, deletar interessado(a)
+            </Button>
+          </AlertDialog.Action>
+        </Flex>
+      </AlertDialogContent>
+    </AlertDialog.Portal>
   )
 }
 

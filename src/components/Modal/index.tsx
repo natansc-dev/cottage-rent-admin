@@ -123,10 +123,11 @@ export function Modal({ data }: ModalProps) {
 
           <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
             <Button type="submit" variant="green">
-              Save changes
+              Reservar
             </Button>
           </Flex>
         </form>
+
         <Dialog.Close asChild>
           <IconButton aria-label="Close">
             <X size={24} />

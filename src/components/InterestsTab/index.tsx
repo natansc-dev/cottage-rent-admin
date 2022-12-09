@@ -4,8 +4,15 @@ import { useEffect, useState } from 'react'
 import { api } from '../../services/api'
 import AlertDialogDemo from '../AlertDialog'
 import * as Dialog from '@radix-ui/react-dialog'
+import * as AlertDialog from '@radix-ui/react-alert-dialog'
+
 import { TooltipComponent } from '../Tooltip'
-import { ActionGroup, InterestedContainer, InterestedList } from './styles'
+import {
+  ActionButton,
+  ActionGroup,
+  InterestedContainer,
+  InterestedList,
+} from './styles'
 import { Modal } from '../Modal'
 
 interface InterestedProps {
@@ -58,21 +65,28 @@ export function InterestsTap() {
                   <td>{format(new Date(i.end_at), 'dd/MM/yyyy')}</td>
                   <td>
                     <ActionGroup>
-                      <TooltipComponent label="deletar">
-                        <AlertDialogDemo id={i.id} remove={'interest'}>
-                          <Trash size={24} />
-                        </AlertDialogDemo>
-                      </TooltipComponent>
+                      <AlertDialog.Root>
+                        <TooltipComponent label="deletar">
+                          <AlertDialog.Trigger asChild>
+                            <ActionButton color="red">
+                              <Trash size={24} />
+                            </ActionButton>
+                          </AlertDialog.Trigger>
+                        </TooltipComponent>
+                        <AlertDialogDemo remove="interest" id={i.id} />
+                      </AlertDialog.Root>
 
-                      <TooltipComponent label="criar">
-                        <Dialog.Root>
+                      <Dialog.Root>
+                        <TooltipComponent label="criar">
                           <Dialog.Trigger asChild>
-                            <CalendarCheck size={24} />
+                            <ActionButton color="green">
+                              <CalendarCheck size={24} />
+                            </ActionButton>
                           </Dialog.Trigger>
+                        </TooltipComponent>
 
-                          <Modal data={i} />
-                        </Dialog.Root>
-                      </TooltipComponent>
+                        <Modal data={i} />
+                      </Dialog.Root>
                     </ActionGroup>
                   </td>
                 </tr>

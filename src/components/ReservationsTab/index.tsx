@@ -3,10 +3,13 @@ import { Trash, Pencil } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../../services/api'
-import AlertDialogDemo from '../AlertDialog'
+import DeleteModal from '../AlertDialog'
+import * as AlertDialog from '@radix-ui/react-alert-dialog'
+
 import { TooltipComponent } from '../Tooltip'
 import { ActionGroup, InterestedContainer, InterestedList } from './styles'
 import Cookies from 'js-cookie'
+import { ActionButton } from '../InterestsTab/styles'
 
 interface ReservationProps {
   id: string
@@ -71,14 +74,22 @@ export function ReservationsTab() {
                   <td>
                     <ActionGroup>
                       <TooltipComponent label="editar">
-                        <Pencil size={24} />
+                        <ActionButton color="yellow">
+                          <Pencil size={24} />
+                        </ActionButton>
                       </TooltipComponent>
 
-                      <TooltipComponent label="deletar">
-                        <AlertDialogDemo id={i.id} remove={'reservation'}>
-                          <Trash size={24} />
-                        </AlertDialogDemo>
-                      </TooltipComponent>
+                      <AlertDialog.Root>
+                        <TooltipComponent label="deletar">
+                          <AlertDialog.Trigger asChild>
+                            <ActionButton color="red">
+                              <Trash size={24} />
+                            </ActionButton>
+                          </AlertDialog.Trigger>
+                        </TooltipComponent>
+
+                        <DeleteModal remove="reservation" id={i.id} />
+                      </AlertDialog.Root>
                     </ActionGroup>
                   </td>
                 </tr>

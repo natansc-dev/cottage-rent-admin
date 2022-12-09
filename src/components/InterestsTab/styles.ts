@@ -1,5 +1,5 @@
 import { styled } from '@stitches/react'
-import { blackA, gray, blue, red, yellow } from '@radix-ui/colors'
+import { blackA, gray, blue, red, yellow, green } from '@radix-ui/colors'
 
 export const InterestedContainer = styled('main', {
   flex: 1,
@@ -65,9 +65,6 @@ export const ActionButton = styled('button', {
   cursor: 'pointer',
   padding: '0.4rem',
   borderRadius: 6,
-  svg: {
-    color: 'white',
-  },
   variants: {
     color: {
       red: {
@@ -80,6 +77,12 @@ export const ActionButton = styled('button', {
         background: `${yellow.yellow8}`,
         '&:hover': {
           background: `${yellow.yellow7}`,
+        },
+      },
+      green: {
+        background: `${green.green8}`,
+        '&:hover': {
+          background: `${green.green7}`,
         },
       },
     },
