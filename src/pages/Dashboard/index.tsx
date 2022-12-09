@@ -13,6 +13,7 @@ import {
 import logoImg from '../../assets/images/logo.png'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import { PackagesTab } from '../../components/PackagesTab'
 
 export function Dashboard() {
   const navigate = useNavigate()
@@ -35,7 +36,7 @@ export function Dashboard() {
       </Header>
 
       <TabsRoot defaultValue="tab1">
-        <TabsList aria-label="Manage your account">
+        <TabsList aria-label="Controle da Chacára">
           <TabsTrigger value="tab1">Interessados(a)</TabsTrigger>
 
           <TabsTrigger value="tab2">Reservas</TabsTrigger>
@@ -52,7 +53,7 @@ export function Dashboard() {
         </TabsContent>
 
         <TabsContent value="tab3">
-          <Text>Em breve</Text>
+          <PackagesTab />
         </TabsContent>
       </TabsRoot>
     </>
