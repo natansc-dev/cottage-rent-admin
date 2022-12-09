@@ -1,5 +1,6 @@
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
 import { deleteInterest } from '../../services/interests/delete'
+import { deleteReservation } from '../../services/reservations/delete'
 import {
   AlertDialogContent,
   AlertDialogOverlay,
@@ -20,6 +21,7 @@ export default function DeleteModal({ id, remove }: DeleteModalProps) {
         break
 
       case 'reservation':
+        await deleteReservation(id)
         break
 
       case 'package':

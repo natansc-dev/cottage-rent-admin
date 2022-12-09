@@ -50,7 +50,7 @@ export function ReservationsTab() {
 
   return (
     <InterestedContainer>
-      <h1>Lista de Interessados(a)</h1>
+      <h1>Lista das Reservas</h1>
 
       <InterestedList>
         <table>
