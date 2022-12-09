@@ -117,6 +117,10 @@ export const LoginForm = styled('form', {
     fontSize: '2.25rem',
     color: '#fcfcfc',
 
+    '&::placeholder': {
+      color: '#fcfcfc',
+    },
+
     '&:focus': {
       border: 0,
       outline: 'none',
