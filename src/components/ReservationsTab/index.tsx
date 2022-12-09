@@ -5,11 +5,14 @@ import { useNavigate } from 'react-router-dom'
 import { api } from '../../services/api'
 import DeleteModal from '../AlertDialog'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
+import * as Dialog from '@radix-ui/react-dialog'
+
 import { TooltipComponent } from '../Tooltip'
 
 import { ActionButton, ActionGroup } from '../../styles/global'
 import { InterestedContainer, InterestedList } from './styles'
 import Cookies from 'js-cookie'
+import { EditReservationModal } from '../EditReservationModal'
 
 interface ReservationProps {
   id: string
@@ -73,11 +76,17 @@ export function ReservationsTab() {
                   <td>{format(new Date(i.end_at), 'dd/MM/yyyy')}</td>
                   <td>
                     <ActionGroup>
-                      <TooltipComponent label="editar">
-                        <ActionButton color="yellow">
-                          <Pencil size={18} />
-                        </ActionButton>
-                      </TooltipComponent>
+                      <Dialog.Root>
+                        <TooltipComponent label="editar">
+                          <Dialog.Trigger asChild>
+                            <ActionButton color="yellow">
+                              <Pencil size={18} />
+                            </ActionButton>
+                          </Dialog.Trigger>
+                        </TooltipComponent>
+
+                        <EditReservationModal data={i} />
+                      </Dialog.Root>
 
                       <AlertDialog.Root>
                         <TooltipComponent label="deletar">

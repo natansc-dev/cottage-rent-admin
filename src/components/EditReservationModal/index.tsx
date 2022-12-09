@@ -1,4 +1,3 @@
-import React, { ReactNode } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { X } from 'phosphor-react'
 import {
@@ -16,9 +15,10 @@ import {
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createReservation } from '../../services/reservations/create'
+import { updateReservation } from '../../services/reservations/update'
 
 const formSchema = z.object({
+  id: z.string(),
   start_at: z.date(),
   end_at: z.date(),
   name: z.string(),
@@ -34,16 +34,24 @@ const formSchema = z.object({
 
 type FormInputs = z.infer<typeof formSchema>
 
-interface ModalProps {
+interface EditReservationModalProps {
   data: {
+    id: string
     start_at: string
     end_at: string
     name: string
+    cpf: string
+    rg: string
     phone: string
+    email: string
+    cep: string
+    address: string
+    district: string
+    city: string
   }
 }
 
-export function NewReservationModal({ data }: ModalProps) {
+export function EditReservationModal({ data }: EditReservationModalProps) {
   const {
     register,
     handleSubmit,
@@ -51,13 +59,23 @@ export function NewReservationModal({ data }: ModalProps) {
   } = useForm<FormInputs>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      id: data?.id,
+      start_at: new Date(data?.start_at),
+      end_at: new Date(data?.end_at),
       name: data?.name,
+      cpf: data?.cpf,
+      rg: data?.rg,
       phone: data?.phone,
+      email: data?.email,
+      cep: data?.cep,
+      address: data?.address,
+      district: data?.district,
+      city: data?.city,
     },
   })
 
-  async function handleCreateReservation(data: any) {
-    await createReservation(data)
+  async function handleUpdateReservation(data: any) {
+    await updateReservation(data)
   }
 
   return (
@@ -65,13 +83,15 @@ export function NewReservationModal({ data }: ModalProps) {
       <DialogOverlay />
 
       <DialogContent>
-        <DialogTitle>Adiciona Reserva</DialogTitle>
+        <DialogTitle>Editar Reserva</DialogTitle>
 
         <DialogDescription>
           Make changes to your profile here. Click save when yore done.
         </DialogDescription>
 
-        <form onSubmit={handleSubmit(handleCreateReservation)}>
+        <form onSubmit={handleSubmit(handleUpdateReservation)}>
+          <Input type="hidden" {...register('id')} />
+
           <Fieldset>
             <Label htmlFor="name">Nome</Label>
             <Input type="text" required id="name" {...register('name')} />
@@ -149,8 +169,8 @@ export function NewReservationModal({ data }: ModalProps) {
           </Flex>
 
           <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
-            <Button type="submit" variant="green">
-              Reservar
+            <Button type="submit" variant="yellow">
+              Editar
             </Button>
           </Flex>
         </form>
