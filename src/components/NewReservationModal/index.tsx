@@ -16,10 +16,11 @@ import {
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { createReservation } from '../../services/reservations/create'
 
 const formSchema = z.object({
-  // start_at: z.string(),
-  // end_at: z.string(),
+  start_at: z.date(),
+  end_at: z.date(),
   name: z.string(),
   cpf: z.string(),
   rg: z.string(),
@@ -42,7 +43,7 @@ interface ModalProps {
   }
 }
 
-export function Modal({ data }: ModalProps) {
+export function NewReservationModal({ data }: ModalProps) {
   const {
     register,
     handleSubmit,
@@ -55,8 +56,8 @@ export function Modal({ data }: ModalProps) {
     },
   })
 
-  function createNewReservation(data: any) {
-    console.log(data)
+  async function createNewReservation(data: any) {
+    await createReservation(data)
   }
 
   return (
@@ -76,25 +77,29 @@ export function Modal({ data }: ModalProps) {
             <Input type="text" required id="name" {...register('name')} />
           </Fieldset>
 
-          <Fieldset>
-            <Label htmlFor="rg">RG</Label>
-            <Input type="text" required id="rg" {...register('rg')} />
-          </Fieldset>
+          <Flex>
+            <Fieldset>
+              <Label htmlFor="rg">RG</Label>
+              <Input type="text" required id="rg" {...register('rg')} />
+            </Fieldset>
 
-          <Fieldset>
-            <Label htmlFor="cpf">CPF</Label>
-            <Input type="text" required id="cpf" {...register('cpf')} />
-          </Fieldset>
+            <Fieldset>
+              <Label htmlFor="cpf">CPF</Label>
+              <Input type="text" required id="cpf" {...register('cpf')} />
+            </Fieldset>
+          </Flex>
 
-          <Fieldset>
-            <Label htmlFor="phone">Telefone</Label>
-            <Input type="text" required id="phone" {...register('phone')} />
-          </Fieldset>
+          <Flex>
+            <Fieldset>
+              <Label htmlFor="phone">Telefone</Label>
+              <Input type="text" required id="phone" {...register('phone')} />
+            </Fieldset>
 
-          <Fieldset>
-            <Label htmlFor="email">Email</Label>
-            <Input type="text" required id="email" {...register('email')} />
-          </Fieldset>
+            <Fieldset>
+              <Label htmlFor="email">Email</Label>
+              <Input type="text" required id="email" {...register('email')} />
+            </Fieldset>
+          </Flex>
 
           <Fieldset>
             <Label htmlFor="cep">CEP</Label>
@@ -120,6 +125,28 @@ export function Modal({ data }: ModalProps) {
             <Label htmlFor="city">Cidade</Label>
             <Input type="text" required id="city" {...register('city')} />
           </Fieldset>
+
+          <Flex css={{ justifyContent: 'space-between' }}>
+            <Fieldset>
+              <Label htmlFor="start_at">Data Inicial</Label>
+              <Input
+                type="date"
+                required
+                id="start_at"
+                {...register('start_at', { valueAsDate: true })}
+              />
+            </Fieldset>
+
+            <Fieldset>
+              <Label htmlFor="end_at">Data Final</Label>
+              <Input
+                type="date"
+                required
+                id="end_at"
+                {...register('end_at', { valueAsDate: true })}
+              />
+            </Fieldset>
+          </Flex>
 
           <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
             <Button type="submit" variant="green">

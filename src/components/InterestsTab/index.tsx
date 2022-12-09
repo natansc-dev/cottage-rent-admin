@@ -13,7 +13,7 @@ import {
   InterestedContainer,
   InterestedList,
 } from './styles'
-import { Modal } from '../Modal'
+import { NewReservationModal } from '../NewReservationModal'
 
 interface InterestedProps {
   id: string
@@ -85,7 +85,7 @@ export function InterestsTap() {
                           </Dialog.Trigger>
                         </TooltipComponent>
 
-                        <Modal data={i} />
+                        <NewReservationModal data={i} />
                       </Dialog.Root>
                     </ActionGroup>
                   </td>

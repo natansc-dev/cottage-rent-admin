@@ -1,6 +1,6 @@
 import { api } from '../api'
 
-export async function DeleteInterest(id: string) {
+export async function deleteInterest(id: string) {
   await api
     .delete(`/interests/${id}`)
     .then((response) => {

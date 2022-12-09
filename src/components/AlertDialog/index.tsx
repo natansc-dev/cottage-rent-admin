@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
 import { styled, keyframes } from '@stitches/react'
 import { violet, blackA, red, mauve } from '@radix-ui/colors'
-import { DeleteInterest } from '../../services/interests/delete'
+import { deleteInterest } from '../../services/interests/delete'
 interface DeleteModalProps {
   remove?: 'interest' | 'reservation' | 'package'
   id: string
@@ -12,7 +12,7 @@ export default function DeleteModal({ id, remove }: DeleteModalProps) {
   async function handleDelete() {
     switch (remove) {
       case 'interest':
-        await DeleteInterest(id)
+        await deleteInterest(id)
         break
 
       case 'reservation':

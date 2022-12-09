@@ -20,6 +20,7 @@ export const DialogOverlay = styled(Dialog.Overlay, {
 })
 
 export const DialogContent = styled(Dialog.Content, {
+  overflow: 'auto',
   backgroundColor: 'white',
   borderRadius: 6,
   boxShadow:
@@ -50,7 +51,7 @@ export const DialogDescription = styled(Dialog.Description, {
   lineHeight: 1.5,
 })
 
-export const Flex = styled('div', { display: 'flex' })
+export const Flex = styled('div', { display: 'flex', gap: '1rem' })
 
 export const Button = styled('button', {
   all: 'unset',
@@ -108,32 +109,27 @@ export const IconButton = styled('button', {
 export const Fieldset = styled('fieldset', {
   all: 'unset',
   display: 'flex',
-  gap: 20,
-  alignItems: 'center',
+  flexDirection: 'column',
+  gap: 4,
   marginBottom: 15,
 })
 
 export const Label = styled('label', {
-  fontSize: 15,
+  fontSize: '1rem',
   color: violet.violet11,
-  width: 90,
-  textAlign: 'right',
+  width: '100%',
 })
 
 export const Input = styled('input', {
-  all: 'unset',
   width: '100%',
-  flex: '1',
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  border: 'none',
   borderRadius: 4,
   padding: '0 10px',
-  fontSize: 15,
+  fontSize: '1rem',
   lineHeight: 1,
   color: violet.violet11,
   boxShadow: `0 0 0 1px ${violet.violet7}`,
-  height: 35,
+  height: 36,
 
   '&:focus': { boxShadow: `0 0 0 2px ${violet.violet8}` },
 })
