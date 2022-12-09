@@ -39,9 +39,9 @@ export const AlertDialogContent = styled(AlertDialog.Content, {
 
 export const AlertDialogTitle = styled(AlertDialog.Title, {
   margin: 0,
-  color: mauve.mauve12,
-  fontSize: 17,
+  fontSize: '1rem',
   fontWeight: 500,
+  marginBottom: 20,
 })
 
 export const AlertDialogDescription = styled(AlertDialog.Description, {
@@ -51,7 +51,9 @@ export const AlertDialogDescription = styled(AlertDialog.Description, {
   lineHeight: 1.5,
 })
 
-export const Flex = styled('div', { display: 'flex' })
+export const Flex = styled('div', {
+  display: 'flex',
+})
 
 export const Button = styled('button', {
   all: 'unset',
@@ -60,10 +62,10 @@ export const Button = styled('button', {
   justifyContent: 'center',
   borderRadius: 4,
   padding: '0 15px',
-  fontSize: 15,
+  fontSize: '1rem',
   lineHeight: 1,
   fontWeight: 500,
-  height: 35,
+  height: 36,
   cursor: 'pointer',
 
   variants: {
