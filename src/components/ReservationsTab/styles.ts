@@ -58,8 +58,3 @@ export const InterestedList = styled('div', {
     },
   },
 })
-
-export const ActionGroup = styled('span', {
-  display: 'flex',
-  gap: 8,
-})

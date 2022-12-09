@@ -30,7 +30,7 @@ export function Dashboard() {
         <img src={logoImg} alt="" />
 
         <SignOutButton onClick={handleLogoff}>
-          <SignOut size={24} />
+          <SignOut size={18} />
         </SignOutButton>
       </Header>
 

@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom'
 import { api } from '../../services/api'
 import DeleteModal from '../AlertDialog'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
-
 import { TooltipComponent } from '../Tooltip'
-import { ActionGroup, InterestedContainer, InterestedList } from './styles'
+
+import { ActionButton, ActionGroup } from '../../styles/global'
+import { InterestedContainer, InterestedList } from './styles'
 import Cookies from 'js-cookie'
-import { ActionButton } from '../InterestsTab/styles'
 
 interface ReservationProps {
   id: string
@@ -75,7 +75,7 @@ export function ReservationsTab() {
                     <ActionGroup>
                       <TooltipComponent label="editar">
                         <ActionButton color="yellow">
-                          <Pencil size={24} />
+                          <Pencil size={18} />
                         </ActionButton>
                       </TooltipComponent>
 
@@ -83,7 +83,7 @@ export function ReservationsTab() {
                         <TooltipComponent label="deletar">
                           <AlertDialog.Trigger asChild>
                             <ActionButton color="red">
-                              <Trash size={24} />
+                              <Trash size={18} />
                             </ActionButton>
                           </AlertDialog.Trigger>
                         </TooltipComponent>

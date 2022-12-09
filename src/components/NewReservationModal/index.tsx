@@ -157,7 +157,7 @@ export function NewReservationModal({ data }: ModalProps) {
 
         <Dialog.Close asChild>
           <IconButton aria-label="Close">
-            <X size={24} />
+            <X size={18} />
           </IconButton>
         </Dialog.Close>
       </DialogContent>

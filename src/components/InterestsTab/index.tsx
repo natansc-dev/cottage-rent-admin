@@ -7,13 +7,9 @@ import * as Dialog from '@radix-ui/react-dialog'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
 
 import { TooltipComponent } from '../Tooltip'
-import {
-  ActionButton,
-  ActionGroup,
-  InterestedContainer,
-  InterestedList,
-} from './styles'
+import { InterestedContainer, InterestedList } from './styles'
 import { NewReservationModal } from '../NewReservationModal'
+import { ActionButton, ActionGroup } from '../../styles/global'
 
 interface InterestedProps {
   id: string
@@ -69,7 +65,7 @@ export function InterestsTap() {
                         <TooltipComponent label="deletar">
                           <AlertDialog.Trigger asChild>
                             <ActionButton color="red">
-                              <Trash size={24} />
+                              <Trash size={18} />
                             </ActionButton>
                           </AlertDialog.Trigger>
                         </TooltipComponent>
@@ -80,7 +76,7 @@ export function InterestsTap() {
                         <TooltipComponent label="criar">
                           <Dialog.Trigger asChild>
                             <ActionButton color="green">
-                              <CalendarCheck size={24} />
+                              <CalendarCheck size={18} />
                             </ActionButton>
                           </Dialog.Trigger>
                         </TooltipComponent>
