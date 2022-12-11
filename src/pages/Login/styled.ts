@@ -24,6 +24,9 @@ export const LoginContainer = styled('main', {
 
 export const LeftGrid = styled('div', {
   display: 'none',
+  h1: {
+    color: 'white',
+  },
 
   variants: {
     media: {

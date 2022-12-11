@@ -7,12 +7,26 @@ interface PackageProps {
 }
 
 export async function createPackage(data: PackageProps) {
-  await api
+  const response = await api
     .post('/packages', data)
     .then((response) => {
-      console.log(response)
+      return {
+        status: response.status,
+        message: response.statusText,
+        data: {
+          id: response.data.id,
+          end_at: response.data.end_at,
+          start_at: response.data.start_at,
+          title: response.data.title,
+        },
+      }
     })
     .catch((error) => {
-      console.log(error)
+      return {
+        status: error.response.status,
+        message: error.response.data.message,
+      }
     })
+
+  return response
 }

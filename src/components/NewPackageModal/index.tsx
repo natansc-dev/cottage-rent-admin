@@ -35,7 +35,9 @@ export function NewPackageModal() {
   })
 
   async function handleCreatePackage(data: any) {
-    await createPackage(data)
+    const response = await createPackage(data)
+
+    console.log(response)
   }
 
   return (
