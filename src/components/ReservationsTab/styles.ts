@@ -6,10 +6,6 @@ export const InterestedContainer = styled('main', {
   padding: '1.5rem',
   display: 'flex',
   flexDirection: 'column',
-  h1: {
-    fontSize: '1.5rem',
-    color: `${blue.blue11}`,
-  },
 })
 
 export const InterestedList = styled('div', {

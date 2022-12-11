@@ -18,6 +18,11 @@ export const globalStyles = globalCss({
     fontSize: '1rem',
     fontWeight: 400,
   },
+
+  h1: {
+    fontSize: '2rem',
+    color: `${blue.blue11}`,
+  },
 })
 
 export const ActionButton = styled('button', {

@@ -1,5 +1,5 @@
 import { styled } from '@stitches/react'
-import { blackA, gray, blue } from '@radix-ui/colors'
+import { blackA, gray, blue, green } from '@radix-ui/colors'
 import { Repeat } from 'phosphor-react'
 
 export const PackageContainer = styled('main', {
@@ -7,28 +7,49 @@ export const PackageContainer = styled('main', {
   padding: '1.5rem',
   display: 'flex',
   flexDirection: 'column',
-  h1: {
-    fontSize: '1.5rem',
-    color: `${blue.blue11}`,
-  },
 })
 
 export const PackageGrid = styled('div', {
   display: 'grid',
   gap: '1rem',
   gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+  marginTop: '2rem',
 })
 
 export const PackageCard = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  background: blue.blue11,
+  background: 'white',
   borderRadius: 6,
   overflow: 'hidden',
   minWidth: '300px',
   height: '100%',
-  border: `1px solid ${gray.gray8}`,
+  border: `2px solid ${gray.gray8}`,
   boxShadow: '0 4px 6px rgb(0 0 0 / 4 %)',
   transition: 'box-shadow .15s ease',
   padding: '1rem',
+  h2: {
+    fontSize: '1.25rem',
+    borderBottom: `1px solid ${gray.gray8}`,
+    padding: '1rem 0',
+    marginBottom: '1rem',
+  },
+})
+
+export const AddNewPackageButton = styled('button', {
+  maxWidth: 300,
+  padding: '0.875rem',
+  background: green.green10,
+  borderRadius: 6,
+  color: 'white',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  border: `1px solid ${green.green10}`,
+  cursor: 'pointer',
+  marginTop: '1rem',
+
+  '&:hover': {
+    background: green.green11,
+  },
 })
