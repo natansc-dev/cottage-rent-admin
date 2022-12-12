@@ -28,11 +28,17 @@ export const PackageCard = styled('div', {
   boxShadow: '0 4px 6px rgb(0 0 0 / 4 %)',
   transition: 'box-shadow .15s ease',
   padding: '1rem',
+
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    borderBottom: `1px solid ${gray.gray8}`,
+    marginBottom: '1rem',
+    padding: '1rem 0',
+  },
+
   h2: {
     fontSize: '1.25rem',
-    borderBottom: `1px solid ${gray.gray8}`,
-    padding: '1rem 0',
-    marginBottom: '1rem',
   },
 })
 

@@ -1,20 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../../services/api'
+
+import * as Dialog from '@radix-ui/react-dialog'
+import * as AlertDialog from '@radix-ui/react-alert-dialog'
 import {
   AddNewPackageButton,
   PackageCard,
   PackageContainer,
   PackageGrid,
 } from './styles'
-import Cookies from 'js-cookie'
-import { format } from 'date-fns'
-import * as Dialog from '@radix-ui/react-dialog'
-
-import * as z from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { createPackage } from '../../services/packages/create'
 import {
   Button,
   DialogContent,
@@ -27,8 +22,25 @@ import {
   Input,
   Label,
 } from '../NewPackageModal/styles'
-import { X } from 'phosphor-react'
+import {
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogTitle,
+  Button as ButtonAlertDialog,
+} from '../AlertDialog/styles'
+
+import Cookies from 'js-cookie'
+import { format } from 'date-fns'
+
+import * as z from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { createPackage } from '../../services/packages/create'
+import { Pencil, Trash, X } from 'phosphor-react'
 import { ToastContainer, toast } from 'react-toastify'
+import { ActionButton, ActionGroup } from '../../styles/global'
+import { TooltipComponent } from '../Tooltip'
+import { deletePackage } from '../../services/packages/delete'
 
 interface PackagesProps {
   id: string
@@ -61,7 +73,6 @@ export function PackagesTab() {
   async function handleCreatePackage(data: any) {
     const response = await createPackage(data)
 
-    console.log(response)
     if (response.status === 201) {
       toast.success('Novo pacote foi adicionado com sucesso!', {
         position: 'top-center',
@@ -74,7 +85,7 @@ export function PackagesTab() {
         theme: 'light',
       })
 
-      setPackages([...packages, data])
+      setPackages((state) => [data, ...state])
     } else {
       toast.error(`Ops... Erro: ${response.message}`, {
         position: 'top-center',
@@ -87,8 +98,41 @@ export function PackagesTab() {
         theme: 'light',
       })
     }
+
     reset()
     setOpen(!open)
+  }
+
+  async function handleDeletePackage(id: string) {
+    const response = await deletePackage(id)
+
+    if (response.status === 204) {
+      toast.success('Pacote foi excluído com sucesso!', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+
+      const packagesWithoutDeleteItem = packages.filter((i) => i.id !== id)
+
+      setPackages(packagesWithoutDeleteItem)
+    } else {
+      toast.error(`Ops... Erro: ${response.message}`, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    }
   }
 
   async function getPackages() {
@@ -187,7 +231,56 @@ export function PackagesTab() {
         {packages.map((i) => {
           return (
             <PackageCard key={i.id}>
-              <h2>{i.title}</h2>
+              <header>
+                <h2>{i.title}</h2>
+
+                <ActionGroup>
+                  <ActionButton color="yellow">
+                    <Pencil size={18} />
+                  </ActionButton>
+
+                  <AlertDialog.Root>
+                    <TooltipComponent label="deletar">
+                      <AlertDialog.Trigger asChild>
+                        <ActionButton color="red">
+                          <Trash size={18} />
+                        </ActionButton>
+                      </AlertDialog.Trigger>
+                    </TooltipComponent>
+
+                    <AlertDialog.Portal>
+                      <AlertDialogOverlay />
+
+                      <AlertDialogContent>
+                        <AlertDialogTitle>
+                          Você tem certeza absoluta, que deseja excluir?
+                        </AlertDialogTitle>
+
+                        <Flex css={{ justifyContent: 'flex-end' }}>
+                          <AlertDialog.Cancel asChild>
+                            <ButtonAlertDialog
+                              variant="mauve"
+                              css={{ marginRight: 25 }}
+                            >
+                              Cancelar
+                            </ButtonAlertDialog>
+                          </AlertDialog.Cancel>
+
+                          <AlertDialog.Action asChild>
+                            <ButtonAlertDialog
+                              variant="red"
+                              onClick={() => handleDeletePackage(i.id)}
+                            >
+                              Sim, deletar!
+                            </ButtonAlertDialog>
+                          </AlertDialog.Action>
+                        </Flex>
+                      </AlertDialogContent>
+                    </AlertDialog.Portal>
+                  </AlertDialog.Root>
+                </ActionGroup>
+              </header>
+
               <p>
                 <time dateTime={format(new Date(i.start_at), 'yyyy-MM-dd')}>
                   {format(new Date(i.start_at), 'dd/MM/yyyy')}
