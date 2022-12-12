@@ -17,6 +17,7 @@ import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createReservation } from '../../services/reservations/create'
+import { deleteInterest } from '../../services/interests/delete'
 
 const formSchema = z.object({
   start_at: z.date(),
@@ -34,16 +35,19 @@ const formSchema = z.object({
 
 type FormInputs = z.infer<typeof formSchema>
 
-interface ModalProps {
+interface NewReservationModalProps {
   data: {
+    id: string
     start_at: string
     end_at: string
     name: string
     phone: string
   }
+  fn: (data: any, created: boolean) => void
 }
 
-export function NewReservationModal({ data }: ModalProps) {
+export function NewReservationModal({ data, fn }: NewReservationModalProps) {
+  const interestId = data.id
   const {
     register,
     handleSubmit,
@@ -57,7 +61,9 @@ export function NewReservationModal({ data }: ModalProps) {
   })
 
   async function handleCreateReservation(data: any) {
-    await createReservation(data)
+    fn(data, true)
+
+    await deleteInterest(interestId)
   }
 
   return (

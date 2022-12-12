@@ -15,12 +15,20 @@ interface ReservationProps {
 }
 
 export async function createReservation(data: ReservationProps) {
-  await api
+  const response = await api
     .post('/reservations', data)
     .then((response) => {
-      console.log(response)
+      return {
+        status: response.status,
+        message: response.statusText,
+      }
     })
     .catch((error) => {
-      console.log(error)
+      return {
+        status: error.response.status,
+        message: error.response.data.message,
+      }
     })
+
+  return response
 }

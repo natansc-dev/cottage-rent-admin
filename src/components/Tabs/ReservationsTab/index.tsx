@@ -12,11 +12,13 @@ import { ActionButton, ActionGroup } from '../../../styles/global'
 
 import { InterestedContainer, InterestedList } from './styles'
 import Cookies from 'js-cookie'
-import { EditReservationModal } from '../../EditReservationModal'
 import { toast } from 'react-toastify'
+
 import { deleteReservation } from '../../../services/reservations/delete'
 import DeleteModal from '../../AlertDialog'
+
 import { updateReservation } from '../../../services/reservations/update'
+import { EditReservationModal } from '../../EditReservationModal'
 
 interface ReservationProps {
   id: string

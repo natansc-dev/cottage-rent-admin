@@ -4,13 +4,8 @@ import { format } from 'date-fns'
 
 import * as Dialog from '@radix-ui/react-dialog'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
-import {
-  AlertDialogContent,
-  AlertDialogOverlay,
-  AlertDialogTitle,
-  AlertDialogButton,
-} from '../../AlertDialog/styles'
-import { ActionButton, ActionGroup, Flex } from '../../../styles/global'
+
+import { ActionButton, ActionGroup } from '../../../styles/global'
 import { InterestedContainer, InterestedList } from './styles'
 
 import { TooltipComponent } from '../../Tooltip'
@@ -20,6 +15,10 @@ import { toast } from 'react-toastify'
 
 import { api } from '../../../services/api'
 import { deleteInterest } from '../../../services/interests/delete'
+import DeleteModal from '../../AlertDialog'
+import { createReservation } from '../../../services/reservations/create'
+import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom'
 
 interface InterestedProps {
   id: string
@@ -30,7 +29,80 @@ interface InterestedProps {
 }
 
 export function InterestsTap() {
+  const navigate = useNavigate()
+  const [open, setOpen] = useState(false)
   const [interested, setInterested] = useState<InterestedProps[]>([])
+
+  async function handleCreateReservation(data: any, created: boolean) {
+    if (created) {
+      const response = await createReservation(data)
+
+      if (response.status === 201) {
+        toast.success(
+          'Reserva foi criada com sucesso! Vá para a aba de Reservas',
+          {
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          },
+        )
+
+        setOpen(!open)
+      } else {
+        toast.error(`Ops... Erro: ${response.message}`, {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        })
+      }
+    }
+  }
+
+  async function handleDeleteInterest(id: string, deleted: boolean) {
+    if (deleted) {
+      const response = await deleteInterest(id)
+
+      if (response.status === 204) {
+        toast.success('Interessado(a) foi excluído(a) com sucesso!', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        })
+
+        const interestedsWithoutDeleteItem = interested.filter(
+          (i) => i.id !== id,
+        )
+
+        setInterested(interestedsWithoutDeleteItem)
+      } else {
+        toast.error(`Ops... Erro: ${response.message}`, {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        })
+      }
+    }
+  }
 
   async function getInterests() {
     try {
@@ -38,45 +110,16 @@ export function InterestsTap() {
 
       setInterested(response.data)
     } catch (error) {
-      alert('Falha!')
+      Cookies.remove('reactauth.token', { path: '/' })
+      Cookies.remove('reactauth.refresh_token', { path: '/' })
+
+      navigate('/')
     }
   }
 
   useEffect(() => {
     getInterests()
-  }, [])
-
-  async function handleDeletePackage(id: string) {
-    const response = await deleteInterest(id)
-
-    if (response.status === 204) {
-      toast.success('Interessado(a) foi excluído(a) com sucesso!', {
-        position: 'top-center',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-      })
-
-      const interestedsWithoutDeleteItem = interested.filter((i) => i.id !== id)
-
-      setInterested(interestedsWithoutDeleteItem)
-    } else {
-      toast.error(`Ops... Erro: ${response.message}`, {
-        position: 'top-center',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-      })
-    }
-  }
+  }, [open])
 
   return (
     <InterestedContainer>
@@ -112,38 +155,10 @@ export function InterestsTap() {
                           </AlertDialog.Trigger>
                         </TooltipComponent>
 
-                        <AlertDialog.Portal>
-                          <AlertDialogOverlay />
-
-                          <AlertDialogContent>
-                            <AlertDialogTitle>
-                              Você tem certeza absoluta, que deseja excluir?
-                            </AlertDialogTitle>
-
-                            <Flex css={{ justifyContent: 'flex-end' }}>
-                              <AlertDialog.Cancel asChild>
-                                <AlertDialogButton
-                                  variant="mauve"
-                                  css={{ marginRight: 25 }}
-                                >
-                                  Cancelar
-                                </AlertDialogButton>
-                              </AlertDialog.Cancel>
-
-                              <AlertDialog.Action asChild>
-                                <AlertDialogButton
-                                  variant="red"
-                                  onClick={() => handleDeletePackage(i.id)}
-                                >
-                                  Sim, deletar!
-                                </AlertDialogButton>
-                              </AlertDialog.Action>
-                            </Flex>
-                          </AlertDialogContent>
-                        </AlertDialog.Portal>
+                        <DeleteModal id={i.id} fn={handleDeleteInterest} />
                       </AlertDialog.Root>
 
-                      <Dialog.Root>
+                      <Dialog.Root open={open} onOpenChange={setOpen}>
                         <TooltipComponent label="criar">
                           <Dialog.Trigger asChild>
                             <ActionButton color="green">
@@ -152,7 +167,10 @@ export function InterestsTap() {
                           </Dialog.Trigger>
                         </TooltipComponent>
 
-                        <NewReservationModal data={i} />
+                        <NewReservationModal
+                          data={i}
+                          fn={handleCreateReservation}
+                        />
                       </Dialog.Root>
                     </ActionGroup>
                   </td>
