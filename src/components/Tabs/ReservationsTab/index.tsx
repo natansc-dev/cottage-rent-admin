@@ -10,7 +10,11 @@ import { TooltipComponent } from '../../Tooltip'
 
 import { ActionButton, ActionGroup } from '../../../styles/global'
 
-import { InterestedContainer, InterestedList } from './styles'
+import {
+  AddNewReservationButton,
+  InterestedContainer,
+  InterestedList,
+} from './styles'
 import Cookies from 'js-cookie'
 import { toast } from 'react-toastify'
 
@@ -18,6 +22,9 @@ import { deleteReservation } from '../../../services/reservations/delete'
 import DeleteModal from '../../AlertDialog'
 
 import { updateReservation } from '../../../services/reservations/update'
+
+import { createReservation } from '../../../services/reservations/create'
+import { NewReservationModal } from '../../NewReservationModal'
 import { EditReservationModal } from '../../EditReservationModal'
 
 interface ReservationProps {
@@ -37,8 +44,42 @@ interface ReservationProps {
 
 export function ReservationsTab() {
   const navigate = useNavigate()
-  const [open, setOpen] = useState(false)
+  const [openNewReservationModal, setOpenNewReservationModal] = useState(false)
+  const [openEditReservationModal, setOpenEditReservationModal] =
+    useState(false)
   const [reservation, setReservation] = useState<ReservationProps[]>([])
+
+  async function handleCreatePackage(data: any) {
+    const response = await createReservation(data)
+
+    if (response.status === 201) {
+      toast.success('Novo pacote foi adicionado com sucesso!', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+
+      setReservation((state) => [data, ...state])
+    } else {
+      toast.error(`Ops... Erro: ${response.message}`, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    }
+
+    setOpenNewReservationModal(false)
+  }
 
   async function handleUpdateReservation(data: any, updated: boolean) {
     if (updated) {
@@ -56,7 +97,7 @@ export function ReservationsTab() {
           theme: 'light',
         })
 
-        setOpen(!open)
+        setOpenEditReservationModal(false)
       } else {
         toast.error(`Ops... Erro: ${response.message}`, {
           position: 'top-center',
@@ -123,11 +164,24 @@ export function ReservationsTab() {
 
   useEffect(() => {
     getReservations()
-  }, [open])
+  }, [openNewReservationModal, openEditReservationModal])
 
   return (
     <InterestedContainer>
       <h1>Lista das Reservas</h1>
+
+      <Dialog.Root
+        open={openNewReservationModal}
+        onOpenChange={setOpenNewReservationModal}
+      >
+        <Dialog.Trigger asChild>
+          <AddNewReservationButton>
+            Adicionar Nova Reservaa
+          </AddNewReservationButton>
+        </Dialog.Trigger>
+
+        <NewReservationModal fn={handleCreatePackage} />
+      </Dialog.Root>
 
       <InterestedList>
         <table>
@@ -150,7 +204,10 @@ export function ReservationsTab() {
                   <td>{format(new Date(i.end_at), 'dd/MM/yyyy')}</td>
                   <td>
                     <ActionGroup>
-                      <Dialog.Root open={open} onOpenChange={setOpen}>
+                      <Dialog.Root
+                        open={openEditReservationModal}
+                        onOpenChange={setOpenEditReservationModal}
+                      >
                         <TooltipComponent label="editar">
                           <Dialog.Trigger asChild>
                             <ActionButton color="yellow">

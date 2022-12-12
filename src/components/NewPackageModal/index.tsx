@@ -15,7 +15,6 @@ import {
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createPackage } from '../../services/packages/create'
 
 const formSchema = z.object({
   start_at: z.date(),
@@ -25,19 +24,23 @@ const formSchema = z.object({
 
 type FormInputs = z.infer<typeof formSchema>
 
-export function NewPackageModal() {
+interface NewPackageModalProps {
+  fn: (data: any) => void
+}
+
+export function NewPackageModal({ fn }: NewPackageModalProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormInputs>({
     resolver: zodResolver(formSchema),
   })
 
-  async function handleCreatePackage(data: any) {
-    const response = await createPackage(data)
-
-    console.log(response)
+  function handleCreatePackage(data: any) {
+    fn(data)
+    reset()
   }
 
   return (

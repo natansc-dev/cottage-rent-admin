@@ -10,18 +10,7 @@ import {
   PackageContainer,
   PackageGrid,
 } from './styles'
-import {
-  Button,
-  DialogContent,
-  DialogDescription,
-  DialogOverlay,
-  DialogTitle,
-  Fieldset,
-  Flex,
-  IconButton,
-  Input,
-  Label,
-} from '../../NewPackageModal/styles'
+
 import {
   AlertDialogContent,
   AlertDialogOverlay,
@@ -36,11 +25,12 @@ import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createPackage } from '../../../services/packages/create'
-import { Pencil, Trash, X } from 'phosphor-react'
+import { Pencil, Trash } from 'phosphor-react'
 import { toast } from 'react-toastify'
-import { ActionButton, ActionGroup } from '../../../styles/global'
+import { ActionButton, ActionGroup, Flex } from '../../../styles/global'
 import { TooltipComponent } from '../../Tooltip'
 import { deletePackage } from '../../../services/packages/delete'
+import { NewPackageModal } from '../../NewPackageModal'
 
 interface PackagesProps {
   id: string
@@ -100,7 +90,7 @@ export function PackagesTab() {
     }
 
     reset()
-    setOpen(!open)
+    setOpen(false)
   }
 
   async function handleDeletePackage(id: string) {
@@ -161,58 +151,7 @@ export function PackagesTab() {
           <AddNewPackageButton>Adicionar Novo Pacote</AddNewPackageButton>
         </Dialog.Trigger>
 
-        <Dialog.Portal>
-          <DialogOverlay />
-
-          <DialogContent>
-            <DialogTitle>Adiciona Pacote</DialogTitle>
-
-            <DialogDescription>
-              Make changes to your profile here. Click save when yore done.
-            </DialogDescription>
-
-            <form onSubmit={handleSubmit(handleCreatePackage)}>
-              <Fieldset>
-                <Label htmlFor="title">Título</Label>
-                <Input type="text" required id="title" {...register('title')} />
-              </Fieldset>
-
-              <Flex css={{ justifyContent: 'space-between' }}>
-                <Fieldset>
-                  <Label htmlFor="start_at">Data Inicial</Label>
-                  <Input
-                    type="date"
-                    required
-                    id="start_at"
-                    {...register('start_at', { valueAsDate: true })}
-                  />
-                </Fieldset>
-
-                <Fieldset>
-                  <Label htmlFor="end_at">Data Final</Label>
-                  <Input
-                    type="date"
-                    required
-                    id="end_at"
-                    {...register('end_at', { valueAsDate: true })}
-                  />
-                </Fieldset>
-              </Flex>
-
-              <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
-                <Button type="submit" variant="green">
-                  Criar
-                </Button>
-              </Flex>
-            </form>
-
-            <Dialog.Close asChild>
-              <IconButton aria-label="Close">
-                <X size={18} />
-              </IconButton>
-            </Dialog.Close>
-          </DialogContent>
-        </Dialog.Portal>
+        <NewPackageModal fn={handleCreatePackage} />
       </Dialog.Root>
 
       <PackageGrid>

@@ -1,4 +1,3 @@
-import React, { ReactNode } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { X } from 'phosphor-react'
 import {
@@ -16,7 +15,6 @@ import {
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createReservation } from '../../services/reservations/create'
 import { deleteInterest } from '../../services/interests/delete'
 
 const formSchema = z.object({
@@ -36,7 +34,7 @@ const formSchema = z.object({
 type FormInputs = z.infer<typeof formSchema>
 
 interface NewReservationModalProps {
-  data: {
+  data?: {
     id: string
     start_at: string
     end_at: string
@@ -47,7 +45,7 @@ interface NewReservationModalProps {
 }
 
 export function NewReservationModal({ data, fn }: NewReservationModalProps) {
-  const interestId = data.id
+  const interestId = data?.id
   const {
     register,
     handleSubmit,
@@ -60,10 +58,11 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
     },
   })
 
-  async function handleCreateReservation(data: any) {
+  async function handleNewReservation(data: any) {
     fn(data, true)
-
-    await deleteInterest(interestId)
+    if (interestId) {
+      await deleteInterest(interestId)
+    }
   }
 
   return (
@@ -71,13 +70,13 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
       <DialogOverlay />
 
       <DialogContent>
-        <DialogTitle>Adiciona Reserva</DialogTitle>
+        <DialogTitle>Nova Reserva</DialogTitle>
 
         <DialogDescription>
           Make changes to your profile here. Click save when yore done.
         </DialogDescription>
 
-        <form onSubmit={handleSubmit(handleCreateReservation)}>
+        <form onSubmit={handleSubmit(handleNewReservation)}>
           <Fieldset>
             <Label htmlFor="name">Nome</Label>
             <Input type="text" required id="name" {...register('name')} />

@@ -1,5 +1,5 @@
 import { styled } from '@stitches/react'
-import { blackA, gray, blue } from '@radix-ui/colors'
+import { blackA, gray, green } from '@radix-ui/colors'
 
 export const InterestedContainer = styled('main', {
   flex: 1,
@@ -52,5 +52,23 @@ export const InterestedList = styled('div', {
         },
       },
     },
+  },
+})
+
+export const AddNewReservationButton = styled('button', {
+  maxWidth: 300,
+  padding: '0.875rem',
+  background: green.green10,
+  borderRadius: 6,
+  color: 'white',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  border: `1px solid ${green.green10}`,
+  cursor: 'pointer',
+  marginTop: '1rem',
+
+  '&:hover': {
+    background: green.green11,
   },
 })

@@ -52,7 +52,7 @@ export function InterestsTap() {
           },
         )
 
-        setOpen(!open)
+        setOpen(false)
       } else {
         toast.error(`Ops... Erro: ${response.message}`, {
           position: 'top-center',
