@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { api } from '../../services/api'
+import { api } from '../../../services/api'
 
 import * as Dialog from '@radix-ui/react-dialog'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
@@ -21,13 +21,13 @@ import {
   IconButton,
   Input,
   Label,
-} from '../NewPackageModal/styles'
+} from '../../NewPackageModal/styles'
 import {
   AlertDialogContent,
   AlertDialogOverlay,
   AlertDialogTitle,
-  Button as ButtonAlertDialog,
-} from '../AlertDialog/styles'
+  AlertDialogButton,
+} from '../../AlertDialog/styles'
 
 import Cookies from 'js-cookie'
 import { format } from 'date-fns'
@@ -35,12 +35,12 @@ import { format } from 'date-fns'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createPackage } from '../../services/packages/create'
+import { createPackage } from '../../../services/packages/create'
 import { Pencil, Trash, X } from 'phosphor-react'
-import { ToastContainer, toast } from 'react-toastify'
-import { ActionButton, ActionGroup } from '../../styles/global'
-import { TooltipComponent } from '../Tooltip'
-import { deletePackage } from '../../services/packages/delete'
+import { toast } from 'react-toastify'
+import { ActionButton, ActionGroup } from '../../../styles/global'
+import { TooltipComponent } from '../../Tooltip'
+import { deletePackage } from '../../../services/packages/delete'
 
 interface PackagesProps {
   id: string
@@ -154,18 +154,6 @@ export function PackagesTab() {
 
   return (
     <PackageContainer>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       <h1>Lista de Pacotes</h1>
 
       <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -258,21 +246,21 @@ export function PackagesTab() {
 
                         <Flex css={{ justifyContent: 'flex-end' }}>
                           <AlertDialog.Cancel asChild>
-                            <ButtonAlertDialog
+                            <AlertDialogButton
                               variant="mauve"
                               css={{ marginRight: 25 }}
                             >
                               Cancelar
-                            </ButtonAlertDialog>
+                            </AlertDialogButton>
                           </AlertDialog.Cancel>
 
                           <AlertDialog.Action asChild>
-                            <ButtonAlertDialog
+                            <AlertDialogButton
                               variant="red"
                               onClick={() => handleDeletePackage(i.id)}
                             >
                               Sim, deletar!
-                            </ButtonAlertDialog>
+                            </AlertDialogButton>
                           </AlertDialog.Action>
                         </Flex>
                       </AlertDialogContent>

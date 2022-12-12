@@ -2,17 +2,24 @@ import { format } from 'date-fns'
 import { Trash, Pencil } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { api } from '../../services/api'
-import DeleteModal from '../AlertDialog'
+import { api } from '../../../services/api'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
 import * as Dialog from '@radix-ui/react-dialog'
 
-import { TooltipComponent } from '../Tooltip'
+import { TooltipComponent } from '../../Tooltip'
 
-import { ActionButton, ActionGroup } from '../../styles/global'
+import { ActionButton, ActionGroup, Flex } from '../../../styles/global'
+import {
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogTitle,
+  AlertDialogButton,
+} from '../../AlertDialog/styles'
 import { InterestedContainer, InterestedList } from './styles'
 import Cookies from 'js-cookie'
-import { EditReservationModal } from '../EditReservationModal'
+import { EditReservationModal } from '../../EditReservationModal'
+import { toast } from 'react-toastify'
+import { deleteReservation } from '../../../services/reservations/delete'
 
 interface ReservationProps {
   id: string
@@ -33,6 +40,40 @@ export function ReservationsTab() {
   const navigate = useNavigate()
 
   const [reservation, setReservation] = useState<ReservationProps[]>([])
+
+  async function handleDeletePackage(id: string) {
+    const response = await deleteReservation(id)
+
+    if (response.status === 204) {
+      toast.success('Reserva foi excluída com sucesso!', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+
+      const reservationsWithoutDeleteItem = reservation.filter(
+        (i) => i.id !== id,
+      )
+
+      setReservation(reservationsWithoutDeleteItem)
+    } else {
+      toast.error(`Ops... Erro: ${response.message}`, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    }
+  }
 
   async function getReservations() {
     try {
@@ -97,7 +138,35 @@ export function ReservationsTab() {
                           </AlertDialog.Trigger>
                         </TooltipComponent>
 
-                        <DeleteModal remove="reservation" id={i.id} />
+                        <AlertDialog.Portal>
+                          <AlertDialogOverlay />
+
+                          <AlertDialogContent>
+                            <AlertDialogTitle>
+                              Você tem certeza absoluta, que deseja excluir?
+                            </AlertDialogTitle>
+
+                            <Flex css={{ justifyContent: 'flex-end' }}>
+                              <AlertDialog.Cancel asChild>
+                                <AlertDialogButton
+                                  variant="mauve"
+                                  css={{ marginRight: 25 }}
+                                >
+                                  Cancelar
+                                </AlertDialogButton>
+                              </AlertDialog.Cancel>
+
+                              <AlertDialog.Action asChild>
+                                <AlertDialogButton
+                                  variant="red"
+                                  onClick={() => handleDeletePackage(i.id)}
+                                >
+                                  Sim, deletar!
+                                </AlertDialogButton>
+                              </AlertDialog.Action>
+                            </Flex>
+                          </AlertDialogContent>
+                        </AlertDialog.Portal>
                       </AlertDialog.Root>
                     </ActionGroup>
                   </td>

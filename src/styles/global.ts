@@ -75,3 +75,7 @@ export const ActionGroup = styled('span', {
   display: 'flex',
   gap: 8,
 })
+
+export const Flex = styled('div', {
+  display: 'flex',
+})

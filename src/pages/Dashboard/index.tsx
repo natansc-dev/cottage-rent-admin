@@ -1,6 +1,6 @@
 import { SignOut } from 'phosphor-react'
-import { InterestsTap } from '../../components/InterestsTab'
-import { ReservationsTab } from '../../components/ReservationsTab'
+import { InterestsTap } from '../../components/Tabs/InterestsTab'
+import { ReservationsTab } from '../../components/Tabs/ReservationsTab'
 import {
   Header,
   SignOutButton,
@@ -13,7 +13,8 @@ import {
 import logoImg from '../../assets/images/logo.png'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
-import { PackagesTab } from '../../components/PackagesTab'
+import { PackagesTab } from '../../components/Tabs/PackagesTab'
+import { ToastContainer } from 'react-toastify'
 
 export function Dashboard() {
   const navigate = useNavigate()
@@ -33,6 +34,19 @@ export function Dashboard() {
         <SignOutButton onClick={handleLogoff}>
           <SignOut size={18} />
         </SignOutButton>
+
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </Header>
 
       <TabsRoot defaultValue="tab1">

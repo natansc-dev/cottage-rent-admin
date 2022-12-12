@@ -51,11 +51,7 @@ export const AlertDialogDescription = styled(AlertDialog.Description, {
   lineHeight: 1.5,
 })
 
-export const Flex = styled('div', {
-  display: 'flex',
-})
-
-export const Button = styled('button', {
+export const AlertDialogButton = styled('button', {
   all: 'unset',
   display: 'inline-flex',
   alignItems: 'center',
