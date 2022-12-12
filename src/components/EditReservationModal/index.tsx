@@ -15,7 +15,6 @@ import {
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { updateReservation } from '../../services/reservations/update'
 
 const formSchema = z.object({
   id: z.string(),
@@ -49,9 +48,10 @@ interface EditReservationModalProps {
     district: string
     city: string
   }
+  fn: (data: any, updated: boolean) => void
 }
 
-export function EditReservationModal({ data }: EditReservationModalProps) {
+export function EditReservationModal({ data, fn }: EditReservationModalProps) {
   const {
     register,
     handleSubmit,
@@ -74,8 +74,8 @@ export function EditReservationModal({ data }: EditReservationModalProps) {
     },
   })
 
-  async function handleUpdateReservation(data: any) {
-    await updateReservation(data)
+  function handleUpdateReservation(data: any) {
+    fn(data, true)
   }
 
   return (

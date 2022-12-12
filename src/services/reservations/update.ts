@@ -1,7 +1,7 @@
 import { api } from '../api'
 
 interface ReservationProps {
-  id: string
+  id?: string
   start_at: string
   end_at: string
   name: string
@@ -16,7 +16,7 @@ interface ReservationProps {
 }
 
 export async function updateReservation(data: ReservationProps) {
-  await api
+  const response = await api
     .put(`/reservations/${data.id}`, {
       start_at: data.start_at,
       end_at: data.end_at,
@@ -30,9 +30,17 @@ export async function updateReservation(data: ReservationProps) {
       rg: data.rg,
     })
     .then((response) => {
-      console.log(response)
+      return {
+        status: response.status,
+        message: response.statusText,
+      }
     })
     .catch((error) => {
-      console.log(error)
+      return {
+        status: error.response.status,
+        message: error.response.data.message,
+      }
     })
+
+  return response
 }
