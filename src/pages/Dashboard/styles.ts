@@ -38,6 +38,7 @@ export const TabsTrigger = styled(Tabs.Trigger, {
   variants: {
     media: {
       lg: {
+        fontSize: '1rem',
         height: 46,
       },
     },

@@ -181,7 +181,7 @@ export function PackagesTab() {
         <NewPackageModal fn={handleCreatePackage} />
       </Dialog.Root>
 
-      <PackageGrid>
+      <PackageGrid media={{ '@lg': 'lg' }}>
         {packages.map((i) => {
           return (
             <PackageCard key={i.id}>

@@ -1,4 +1,4 @@
-import { styled } from '@stitches/react'
+import { styled } from '../../../styles'
 import { blackA, gray, blue, green } from '@radix-ui/colors'
 import { Repeat } from 'phosphor-react'
 
@@ -10,10 +10,17 @@ export const PackageContainer = styled('main', {
 })
 
 export const PackageGrid = styled('div', {
-  display: 'grid',
-  gap: '1rem',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
   marginTop: '2rem',
+
+  variants: {
+    media: {
+      lg: {
+        display: 'grid',
+        gap: '1rem',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+      },
+    },
+  },
 })
 
 export const PackageCard = styled('div', {
@@ -34,11 +41,25 @@ export const PackageCard = styled('div', {
     justifyContent: 'space-between',
     borderBottom: `1px solid ${gray.gray8}`,
     marginBottom: '1rem',
-    padding: '1rem 0',
+    paddingBottom: '1rem',
   },
 
   h2: {
+    fontSize: '2.25rem',
+  },
+
+  p: {
     fontSize: '1.25rem',
+  },
+
+  variants: {
+    media: {
+      lg: {
+        h2: {
+          fontSize: '1.25rem',
+        },
+      },
+    },
   },
 })
 
