@@ -204,23 +204,10 @@ export function ReservationsTab() {
                   <td>{format(new Date(i.end_at), 'dd/MM/yyyy')}</td>
                   <td>
                     <ActionGroup>
-                      <Dialog.Root
-                        open={openEditReservationModal}
-                        onOpenChange={setOpenEditReservationModal}
-                      >
-                        <TooltipComponent label="editar">
-                          <Dialog.Trigger asChild>
-                            <ActionButton color="yellow">
-                              <Pencil size={18} />
-                            </ActionButton>
-                          </Dialog.Trigger>
-                        </TooltipComponent>
-
-                        <EditReservationModal
-                          data={i}
-                          fn={handleUpdateReservation}
-                        />
-                      </Dialog.Root>
+                      <EditReservationModal
+                        data={i}
+                        fn={handleUpdateReservation}
+                      />
 
                       <AlertDialog.Root>
                         <TooltipComponent label="deletar">

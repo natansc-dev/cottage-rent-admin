@@ -50,9 +50,7 @@ export function NewPackageModal({ fn }: NewPackageModalProps) {
       <DialogContent>
         <DialogTitle>Adiciona Pacote</DialogTitle>
 
-        <DialogDescription>
-          Make changes to your profile here. Click save when yore done.
-        </DialogDescription>
+        <DialogDescription>Preencha o formulário abaixo.</DialogDescription>
 
         <form onSubmit={handleSubmit(handleCreatePackage)}>
           <Fieldset>

@@ -1,6 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog'
-import { X } from 'phosphor-react'
+import { Pencil, X } from 'phosphor-react'
 import {
+  ActionButton,
   Button,
   DialogContent,
   DialogDescription,
@@ -15,6 +16,8 @@ import {
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
+import { TooltipComponent } from '../Tooltip'
 
 const formSchema = z.object({
   id: z.string(),
@@ -52,6 +55,8 @@ interface EditReservationModalProps {
 }
 
 export function EditReservationModal({ data, fn }: EditReservationModalProps) {
+  const [open, setOpen] = useState(false)
+
   const {
     register,
     handleSubmit,
@@ -76,111 +81,126 @@ export function EditReservationModal({ data, fn }: EditReservationModalProps) {
 
   function handleUpdateReservation(data: any) {
     fn(data, true)
+    setOpen(!open)
   }
 
   return (
-    <Dialog.Portal>
-      <DialogOverlay />
+    <Dialog.Root open={open} onOpenChange={setOpen}>
+      <TooltipComponent label="editar">
+        <Dialog.Trigger asChild>
+          <ActionButton color="yellow">
+            <Pencil size={18} />
+          </ActionButton>
+        </Dialog.Trigger>
+      </TooltipComponent>
+      <Dialog.Portal>
+        <DialogOverlay />
 
-      <DialogContent>
-        <DialogTitle>Editar Reserva</DialogTitle>
+        <DialogContent>
+          <DialogTitle>Editar Reserva</DialogTitle>
 
-        <DialogDescription>
-          Make changes to your profile here. Click save when yore done.
-        </DialogDescription>
+          <DialogDescription>
+            Altere os dados que deseja atualizar.
+          </DialogDescription>
 
-        <form onSubmit={handleSubmit(handleUpdateReservation)}>
-          <Input type="hidden" {...register('id')} />
+          <form onSubmit={handleSubmit(handleUpdateReservation)}>
+            <Input type="hidden" {...register('id')} />
 
-          <Fieldset>
-            <Label htmlFor="name">Nome</Label>
-            <Input type="text" required id="name" {...register('name')} />
-          </Fieldset>
-
-          <Flex>
             <Fieldset>
-              <Label htmlFor="rg">RG</Label>
-              <Input type="text" required id="rg" {...register('rg')} />
+              <Label htmlFor="name">Nome</Label>
+              <Input type="text" required id="name" {...register('name')} />
+            </Fieldset>
+
+            <Flex css={{ gap: '1rem' }}>
+              <Fieldset>
+                <Label htmlFor="rg">RG</Label>
+                <Input type="text" required id="rg" {...register('rg')} />
+              </Fieldset>
+
+              <Fieldset>
+                <Label htmlFor="cpf">CPF</Label>
+                <Input type="text" required id="cpf" {...register('cpf')} />
+              </Fieldset>
+            </Flex>
+
+            <Flex css={{ gap: '1rem' }}>
+              <Fieldset>
+                <Label htmlFor="phone">Telefone</Label>
+                <Input type="text" required id="phone" {...register('phone')} />
+              </Fieldset>
+
+              <Fieldset>
+                <Label htmlFor="email">Email</Label>
+                <Input type="text" required id="email" {...register('email')} />
+              </Fieldset>
+            </Flex>
+
+            <Fieldset>
+              <Label htmlFor="cep">CEP</Label>
+              <Input type="text" required id="cep" {...register('cep')} />
             </Fieldset>
 
             <Fieldset>
-              <Label htmlFor="cpf">CPF</Label>
-              <Input type="text" required id="cpf" {...register('cpf')} />
-            </Fieldset>
-          </Flex>
-
-          <Flex>
-            <Fieldset>
-              <Label htmlFor="phone">Telefone</Label>
-              <Input type="text" required id="phone" {...register('phone')} />
-            </Fieldset>
-
-            <Fieldset>
-              <Label htmlFor="email">Email</Label>
-              <Input type="text" required id="email" {...register('email')} />
-            </Fieldset>
-          </Flex>
-
-          <Fieldset>
-            <Label htmlFor="cep">CEP</Label>
-            <Input type="text" required id="cep" {...register('cep')} />
-          </Fieldset>
-
-          <Fieldset>
-            <Label htmlFor="address">Endereço</Label>
-            <Input type="text" required id="address" {...register('address')} />
-          </Fieldset>
-
-          <Fieldset>
-            <Label htmlFor="district">Bairro</Label>
-            <Input
-              type="text"
-              required
-              id="district"
-              {...register('district')}
-            />
-          </Fieldset>
-
-          <Fieldset>
-            <Label htmlFor="city">Cidade</Label>
-            <Input type="text" required id="city" {...register('city')} />
-          </Fieldset>
-
-          <Flex css={{ justifyContent: 'space-between' }}>
-            <Fieldset>
-              <Label htmlFor="start_at">Data Inicial</Label>
+              <Label htmlFor="address">Endereço</Label>
               <Input
-                type="date"
+                type="text"
                 required
-                id="start_at"
-                {...register('start_at', { valueAsDate: true })}
+                id="address"
+                {...register('address')}
               />
             </Fieldset>
 
             <Fieldset>
-              <Label htmlFor="end_at">Data Final</Label>
+              <Label htmlFor="district">Bairro</Label>
               <Input
-                type="date"
+                type="text"
                 required
-                id="end_at"
-                {...register('end_at', { valueAsDate: true })}
+                id="district"
+                {...register('district')}
               />
             </Fieldset>
-          </Flex>
 
-          <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
-            <Button type="submit" variant="yellow">
-              Editar
-            </Button>
-          </Flex>
-        </form>
+            <Fieldset>
+              <Label htmlFor="city">Cidade</Label>
+              <Input type="text" required id="city" {...register('city')} />
+            </Fieldset>
 
-        <Dialog.Close asChild>
-          <IconButton aria-label="Close">
-            <X size={18} />
-          </IconButton>
-        </Dialog.Close>
-      </DialogContent>
-    </Dialog.Portal>
+            <Flex css={{ justifyContent: 'space-between' }}>
+              <Fieldset>
+                <Label htmlFor="start_at">Data Inicial</Label>
+                <Input
+                  type="date"
+                  required
+                  id="start_at"
+                  {...register('start_at', { valueAsDate: true })}
+                />
+              </Fieldset>
+
+              <Fieldset>
+                <Label htmlFor="end_at">Data Final</Label>
+                <Input
+                  type="date"
+                  required
+                  id="end_at"
+                  {...register('end_at', { valueAsDate: true })}
+                />
+              </Fieldset>
+            </Flex>
+
+            <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
+              <Button type="submit" variant="yellow">
+                Editar
+              </Button>
+            </Flex>
+          </form>
+
+          <Dialog.Close asChild>
+            <IconButton aria-label="Close">
+              <X size={18} />
+            </IconButton>
+          </Dialog.Close>
+        </DialogContent>
+      </Dialog.Portal>
+    </Dialog.Root>
   )
 }
