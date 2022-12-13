@@ -1,4 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog'
+import { format } from 'date-fns'
 import { Pencil, X } from 'phosphor-react'
 import {
   ActionButton,
@@ -21,8 +22,8 @@ import { TooltipComponent } from '../Tooltip'
 
 const formSchema = z.object({
   id: z.string(),
-  start_at: z.date(),
-  end_at: z.date(),
+  start_at: z.string(),
+  end_at: z.string(),
   name: z.string(),
   cpf: z.string(),
   rg: z.string(),
@@ -65,8 +66,8 @@ export function EditReservationModal({ data, fn }: EditReservationModalProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       id: data?.id,
-      start_at: new Date(data?.start_at),
-      end_at: new Date(data?.end_at),
+      start_at: format(new Date(data.start_at), 'yyyy-MM-dd'),
+      end_at: format(new Date(data.end_at), 'yyyy-MM-dd'),
       name: data?.name,
       cpf: data?.cpf,
       rg: data?.rg,
@@ -172,7 +173,7 @@ export function EditReservationModal({ data, fn }: EditReservationModalProps) {
                   type="date"
                   required
                   id="start_at"
-                  {...register('start_at', { valueAsDate: true })}
+                  {...register('start_at')}
                 />
               </Fieldset>
 
@@ -182,7 +183,7 @@ export function EditReservationModal({ data, fn }: EditReservationModalProps) {
                   type="date"
                   required
                   id="end_at"
-                  {...register('end_at', { valueAsDate: true })}
+                  {...register('end_at')}
                 />
               </Fieldset>
             </Flex>
