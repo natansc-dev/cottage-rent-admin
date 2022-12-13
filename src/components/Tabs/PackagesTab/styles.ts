@@ -39,6 +39,7 @@ export const PackageCard = styled('div', {
   header: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'center',
     borderBottom: `1px solid ${gray.gray8}`,
     marginBottom: '1rem',
     paddingBottom: '1rem',
@@ -57,6 +58,9 @@ export const PackageCard = styled('div', {
       lg: {
         h2: {
           fontSize: '1.25rem',
+        },
+        p: {
+          fontSize: '1rem',
         },
       },
     },

@@ -184,7 +184,7 @@ export function PackagesTab() {
       <PackageGrid media={{ '@lg': 'lg' }}>
         {packages.map((i) => {
           return (
-            <PackageCard key={i.id}>
+            <PackageCard key={i.id} media={{ '@lg': 'lg' }}>
               <header>
                 <h2>{i.title}</h2>
 
