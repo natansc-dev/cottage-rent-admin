@@ -60,8 +60,6 @@ export const RightGrid = styled('div', {
   background: 'rgba(41, 41, 41, 0.39)',
   boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
   backdropFilter: 'blur(50px)',
-
-  color: '$white',
   padding: '2rem',
 
   img: {
@@ -70,11 +68,13 @@ export const RightGrid = styled('div', {
   },
 
   h1: {
+    color: 'white',
     fontSize: '6.5rem',
     fontWeight: 800,
   },
 
   p: {
+    color: 'white',
     fontSize: '2.25rem',
     marginBottom: '2.55rem',
   },
