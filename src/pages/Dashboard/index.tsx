@@ -1,6 +1,11 @@
 import { SignOut } from 'phosphor-react'
 import { InterestsTap } from '../../components/Tabs/InterestsTab'
 import { ReservationsTab } from '../../components/Tabs/ReservationsTab'
+import logoImg from '../../assets/images/logo.png'
+import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
+import { PackagesTab } from '../../components/Tabs/PackagesTab'
+import { ToastContainer } from 'react-toastify'
 import {
   Header,
   SignOutButton,
@@ -9,11 +14,6 @@ import {
   TabsRoot,
   TabsTrigger,
 } from './styles'
-import logoImg from '../../assets/images/logo.png'
-import { useNavigate } from 'react-router-dom'
-import Cookies from 'js-cookie'
-import { PackagesTab } from '../../components/Tabs/PackagesTab'
-import { ToastContainer } from 'react-toastify'
 
 export function Dashboard() {
   const navigate = useNavigate()
@@ -27,11 +27,11 @@ export function Dashboard() {
 
   return (
     <>
-      <Header>
+      <Header media={{ '@lg': 'lg' }}>
         <img src={logoImg} alt="" />
 
-        <SignOutButton onClick={handleLogoff}>
-          <SignOut size={18} />
+        <SignOutButton media={{ '@lg': 'lg' }} onClick={handleLogoff}>
+          <SignOut />
         </SignOutButton>
 
         <ToastContainer

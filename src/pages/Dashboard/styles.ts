@@ -1,4 +1,4 @@
-import { styled } from '@stitches/react'
+import { styled } from '../../styles'
 import { mauve, gray, blue } from '@radix-ui/colors'
 import * as Tabs from '@radix-ui/react-tabs'
 
@@ -63,16 +63,37 @@ export const SignOutButton = styled('button', {
   borderRadius: 6,
 
   svg: {
-    color: `${blue.blue10}`,
+    fontSize: '58px',
+    color: blue.blue10,
+  },
+
+  variants: {
+    media: {
+      lg: {
+        svg: {
+          fontSize: '18px',
+        },
+      },
+    },
   },
 })
 
 export const Header = styled('header', {
-  margin: '1rem 0',
   display: 'flex',
 
   img: {
     margin: '0 auto',
-    width: 128,
+  },
+
+  variants: {
+    media: {
+      lg: {
+        margin: '1rem 0',
+        img: {
+          width: 128,
+          margin: '0 auto',
+        },
+      },
+    },
   },
 })
