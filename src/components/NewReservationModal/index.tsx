@@ -72,9 +72,7 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
       <DialogContent>
         <DialogTitle>Nova Reserva</DialogTitle>
 
-        <DialogDescription>
-          Make changes to your profile here. Click save when yore done.
-        </DialogDescription>
+        <DialogDescription>Preencha o formulário abaixo.</DialogDescription>
 
         <form onSubmit={handleSubmit(handleNewReservation)}>
           <Fieldset>
@@ -154,9 +152,7 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
           </Flex>
 
           <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
-            <Button type="submit" variant="green">
-              Reservar
-            </Button>
+            <Button type="submit">Reservar</Button>
           </Flex>
         </form>
 

@@ -1,5 +1,5 @@
 import { styled, keyframes } from '@stitches/react'
-import { violet, blackA, mauve, green } from '@radix-ui/colors'
+import { violet, blackA, blue, green } from '@radix-ui/colors'
 import * as Dialog from '@radix-ui/react-dialog'
 
 export const overlayShow = keyframes({
@@ -40,13 +40,13 @@ export const DialogContent = styled(Dialog.Content, {
 export const DialogTitle = styled(Dialog.Title, {
   margin: 0,
   fontWeight: 500,
-  color: mauve.mauve12,
+  color: blue.blue12,
   fontSize: 17,
 })
 
 export const DialogDescription = styled(Dialog.Description, {
   margin: '10px 0 20px',
-  color: mauve.mauve11,
+  color: blue.blue11,
   fontSize: 15,
   lineHeight: 1.5,
 })
@@ -71,7 +71,7 @@ export const Button = styled('button', {
         backgroundColor: 'white',
         color: violet.violet11,
         boxShadow: `0 2px 10px ${blackA.blackA7}`,
-        '&:hover': { backgroundColor: mauve.mauve3 },
+        '&:hover': { backgroundColor: blue.blue3 },
         '&:focus': { boxShadow: `0 0 0 2px black` },
       },
       green: {

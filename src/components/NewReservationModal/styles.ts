@@ -1,5 +1,5 @@
 import { styled, keyframes } from '@stitches/react'
-import { violet, blackA, mauve, green } from '@radix-ui/colors'
+import { red, blackA, blue, green } from '@radix-ui/colors'
 import * as Dialog from '@radix-ui/react-dialog'
 
 export const overlayShow = keyframes({
@@ -39,14 +39,14 @@ export const DialogContent = styled(Dialog.Content, {
 
 export const DialogTitle = styled(Dialog.Title, {
   margin: 0,
-  fontWeight: 500,
-  color: mauve.mauve12,
-  fontSize: 17,
+  fontWeight: 'bold',
+  color: blackA.blackA12,
+  fontSize: '1rem',
 })
 
 export const DialogDescription = styled(Dialog.Description, {
   margin: '10px 0 20px',
-  color: mauve.mauve11,
+  color: blackA.blackA12,
   fontSize: 15,
   lineHeight: 1.5,
 })
@@ -60,32 +60,15 @@ export const Button = styled('button', {
   justifyContent: 'center',
   borderRadius: 4,
   padding: '0 15px',
-  fontSize: 15,
+  fontSize: '1rem',
   lineHeight: 1,
   fontWeight: 500,
   height: 35,
 
-  variants: {
-    variant: {
-      violet: {
-        backgroundColor: 'white',
-        color: violet.violet11,
-        boxShadow: `0 2px 10px ${blackA.blackA7}`,
-        '&:hover': { backgroundColor: mauve.mauve3 },
-        '&:focus': { boxShadow: `0 0 0 2px black` },
-      },
-      green: {
-        backgroundColor: green.green4,
-        color: green.green11,
-        '&:hover': { backgroundColor: green.green5 },
-        '&:focus': { boxShadow: `0 0 0 2px ${green.green7}` },
-      },
-    },
-  },
-
-  defaultVariants: {
-    variant: 'violet',
-  },
+  backgroundColor: green.green4,
+  color: green.green11,
+  '&:hover': { backgroundColor: green.green5 },
+  '&:focus': { boxShadow: `0 0 0 2px ${green.green7}` },
 })
 
 export const IconButton = styled('button', {
@@ -97,13 +80,13 @@ export const IconButton = styled('button', {
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
-  color: violet.violet11,
+  color: red.red11,
   position: 'absolute',
   top: 10,
   right: 10,
 
-  '&:hover': { backgroundColor: violet.violet4 },
-  '&:focus': { boxShadow: `0 0 0 2px ${violet.violet7}` },
+  '&:hover': { backgroundColor: red.red4 },
+  '&:focus': { boxShadow: `0 0 0 2px ${red.red7}` },
 })
 
 export const Fieldset = styled('fieldset', {
@@ -116,7 +99,7 @@ export const Fieldset = styled('fieldset', {
 
 export const Label = styled('label', {
   fontSize: '1rem',
-  color: violet.violet11,
+  color: blackA.blackA12,
   width: '100%',
 })
 
@@ -127,9 +110,9 @@ export const Input = styled('input', {
   padding: '0 10px',
   fontSize: '1rem',
   lineHeight: 1,
-  color: violet.violet11,
-  boxShadow: `0 0 0 1px ${violet.violet7}`,
+  color: blackA.blackA12,
+  boxShadow: `0 0 0 1px ${blackA.blackA10}`,
   height: 36,
 
-  '&:focus': { boxShadow: `0 0 0 2px ${violet.violet8}` },
+  '&:focus': { boxShadow: `0 0 0 2px ${blue.blue8}` },
 })
