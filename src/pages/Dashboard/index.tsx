@@ -50,11 +50,17 @@ export function Dashboard() {
 
       <TabsRoot defaultValue="tab1">
         <TabsList aria-label="Controle da Chacára">
-          <TabsTrigger value="tab1">Interessados(a)</TabsTrigger>
+          <TabsTrigger value="tab1" media={{ '@lg': 'lg' }}>
+            Interessados(a)
+          </TabsTrigger>
 
-          <TabsTrigger value="tab2">Reservas</TabsTrigger>
+          <TabsTrigger value="tab2" media={{ '@lg': 'lg' }}>
+            Reservas
+          </TabsTrigger>
 
-          <TabsTrigger value="tab3">Pacotes</TabsTrigger>
+          <TabsTrigger value="tab3" media={{ '@lg': 'lg' }}>
+            Pacotes
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="tab1">

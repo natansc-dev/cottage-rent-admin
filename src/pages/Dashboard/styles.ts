@@ -17,24 +17,30 @@ export const TabsList = styled(Tabs.List, {
 
 export const TabsTrigger = styled(Tabs.Trigger, {
   all: 'unset',
-  fontFamily: 'inherit',
   backgroundColor: 'white',
   padding: '0 20px',
-  height: 46,
+  height: 92,
   flex: 1,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  fontSize: '1rem',
+  fontSize: '2rem',
   lineHeight: 1,
-  color: mauve.mauve11,
+  color: gray.gray11,
   userSelect: 'none',
   '&:first-child': { borderTopLeftRadius: 6 },
   '&:last-child': { borderTopRightRadius: 6 },
   '&:hover': { color: blue.blue11 },
   '&[data-state="active"]': {
     color: blue.blue11,
-    boxShadow: 'inset 0 -1px 0 0 currentColor, 0 1px 0 0 currentColor',
+    borderBottom: `2px solid ${blue.blue11}`,
+  },
+  variants: {
+    media: {
+      lg: {
+        height: 46,
+      },
+    },
   },
 })
 
@@ -80,15 +86,17 @@ export const SignOutButton = styled('button', {
 
 export const Header = styled('header', {
   display: 'flex',
+  borderBottom: `1px solid ${gray.gray4}`,
+  padding: '1rem',
 
   img: {
+    width: 328,
     margin: '0 auto',
   },
 
   variants: {
     media: {
       lg: {
-        margin: '1rem 0',
         img: {
           width: 128,
           margin: '0 auto',
