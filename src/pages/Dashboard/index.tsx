@@ -8,7 +8,6 @@ import {
   TabsList,
   TabsRoot,
   TabsTrigger,
-  Text,
 } from './styles'
 import logoImg from '../../assets/images/logo.png'
 import { useNavigate } from 'react-router-dom'

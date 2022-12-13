@@ -6,11 +6,13 @@ import {
   RightGrid,
 } from './styled'
 import logoImg from '../../assets/images/logo.png'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom'
 
 const loginFormSchema = z.object({
   username: z.string(),
@@ -20,6 +22,7 @@ const loginFormSchema = z.object({
 type loginFormInputs = z.infer<typeof loginFormSchema>
 
 export function Login() {
+  const navigate = useNavigate()
   const { SignIn } = useContext(AuthContext)
 
   const {
@@ -36,6 +39,15 @@ export function Login() {
 
     reset()
   }
+
+  useEffect(() => {
+    const token = Cookies.get('reactauth.token')
+    const tokenRefresh = Cookies.get('reactauth.token')
+
+    if (token && tokenRefresh) {
+      navigate('/dashboard')
+    }
+  }, [])
 
   return (
     <BackgroundImage>
