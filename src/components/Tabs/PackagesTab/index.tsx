@@ -51,8 +51,8 @@ type FormInputs = z.infer<typeof formSchema>
 
 export function PackagesTab() {
   const navigate = useNavigate()
-  const [openNewPackageModal, setOpenNewPackageModal] = useState(false)
-  const [openEditPackageModal, setOpenEditPackageModal] = useState(false)
+  const [refresh, setRefresh] = useState(false)
+  const [open, setOpen] = useState(false)
   const [packages, setPackages] = useState<PackagesProps[]>([])
 
   async function handleCreatePackage(data: any) {
@@ -71,6 +71,7 @@ export function PackagesTab() {
       })
 
       setPackages((state) => [data, ...state])
+      setRefresh(!refresh)
     } else {
       toast.error(`Ops... Erro: ${response.message}`, {
         position: 'top-center',
@@ -84,7 +85,7 @@ export function PackagesTab() {
       })
     }
 
-    setOpenNewPackageModal(false)
+    setOpen(!open)
   }
 
   async function handleUpdatePackage(data: any, updated: boolean) {
@@ -102,8 +103,6 @@ export function PackagesTab() {
           progress: undefined,
           theme: 'light',
         })
-
-        setOpenEditPackageModal(false)
       } else {
         toast.error(`Ops... Erro: ${response.message}`, {
           position: 'top-center',
@@ -116,6 +115,8 @@ export function PackagesTab() {
           theme: 'light',
         })
       }
+
+      setRefresh(!updated)
     }
   }
 
@@ -166,16 +167,13 @@ export function PackagesTab() {
 
   useEffect(() => {
     getPackages()
-  }, [openNewPackageModal, openEditPackageModal])
+  }, [refresh])
 
   return (
     <PackageContainer>
       <h1>Lista de Pacotes</h1>
 
-      <Dialog.Root
-        open={openNewPackageModal}
-        onOpenChange={setOpenNewPackageModal}
-      >
+      <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Trigger asChild>
           <AddNewPackageButton>Adicionar Novo Pacote</AddNewPackageButton>
         </Dialog.Trigger>
@@ -191,20 +189,7 @@ export function PackagesTab() {
                 <h2>{i.title}</h2>
 
                 <ActionGroup>
-                  <Dialog.Root
-                    open={openEditPackageModal}
-                    onOpenChange={setOpenEditPackageModal}
-                  >
-                    <TooltipComponent label="editar">
-                      <Dialog.Trigger asChild>
-                        <ActionButton color="yellow">
-                          <Pencil size={18} />
-                        </ActionButton>
-                      </Dialog.Trigger>
-                    </TooltipComponent>
-
-                    <EditPackageModal data={i} fn={handleUpdatePackage} />
-                  </Dialog.Root>
+                  <EditPackageModal data={i} fn={handleUpdatePackage} />
 
                   <AlertDialog.Root>
                     <TooltipComponent label="deletar">
@@ -226,7 +211,7 @@ export function PackagesTab() {
                         <Flex css={{ justifyContent: 'flex-end' }}>
                           <AlertDialog.Cancel asChild>
                             <AlertDialogButton
-                              variant="mauve"
+                              variant="gray"
                               css={{ marginRight: 25 }}
                             >
                               Cancelar

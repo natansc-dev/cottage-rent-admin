@@ -28,7 +28,7 @@ export default function DeleteModal({ id, fn }: DeleteModalProps) {
 
         <Flex css={{ justifyContent: 'flex-end' }}>
           <AlertDialog.Cancel asChild>
-            <AlertDialogButton variant="mauve" css={{ marginRight: 25 }}>
+            <AlertDialogButton variant="gray" css={{ marginRight: 25 }}>
               Cancelar
             </AlertDialogButton>
           </AlertDialog.Cancel>

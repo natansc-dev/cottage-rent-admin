@@ -1,5 +1,5 @@
 import { styled, keyframes } from '@stitches/react'
-import { violet, blackA, red, blue } from '@radix-ui/colors'
+import { gray, blackA, red, blue } from '@radix-ui/colors'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
 
 export const overlayShow = keyframes({
@@ -47,7 +47,7 @@ export const AlertDialogTitle = styled(AlertDialog.Title, {
 export const AlertDialogDescription = styled(AlertDialog.Description, {
   marginBottom: 20,
   color: blackA.blackA12,
-  fontSize: 15,
+  fontSize: '1rem',
   lineHeight: 1.5,
 })
 
@@ -66,11 +66,10 @@ export const AlertDialogButton = styled('button', {
 
   variants: {
     variant: {
-      violet: {
-        backgroundColor: 'white',
-        color: violet.violet11,
-        boxShadow: `0 2px 10px ${blackA.blackA7}`,
-        '&:hover': { backgroundColor: blue.blue3 },
+      gray: {
+        backgroundColor: gray.gray1,
+        color: gray.gray11,
+        '&:hover': { backgroundColor: gray.gray3 },
         '&:focus': { boxShadow: `0 0 0 2px black` },
       },
       red: {
@@ -89,6 +88,6 @@ export const AlertDialogButton = styled('button', {
   },
 
   defaultVariants: {
-    variant: 'violet',
+    variant: 'gray',
   },
 })

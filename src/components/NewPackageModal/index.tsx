@@ -11,7 +11,7 @@ import {
   IconButton,
   Input,
   Label,
-} from './styles'
+} from '../../styles/global'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -83,9 +83,7 @@ export function NewPackageModal({ fn }: NewPackageModalProps) {
           </Flex>
 
           <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
-            <Button type="submit" variant="green">
-              Criar
-            </Button>
+            <Button type="submit">Criar</Button>
           </Flex>
         </form>
 

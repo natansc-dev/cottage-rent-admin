@@ -1,6 +1,8 @@
 import * as Dialog from '@radix-ui/react-dialog'
-import { X } from 'phosphor-react'
+
+import { Pencil, X } from 'phosphor-react'
 import {
+  ActionButton,
   Button,
   DialogContent,
   DialogDescription,
@@ -11,10 +13,12 @@ import {
   IconButton,
   Input,
   Label,
-} from './styles'
+} from '../../styles/global'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { ReactNode, useState } from 'react'
+import { TooltipComponent } from '../Tooltip'
 
 const formSchema = z.object({
   id: z.string(),
@@ -36,78 +40,91 @@ interface EditPackageModalProps {
 }
 
 export function EditPackageModal({ data, fn }: EditPackageModalProps) {
+  const [open, setOpen] = useState(false)
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormInputs>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      id: data?.id,
-      start_at: new Date(data?.start_at),
-      end_at: new Date(data?.end_at),
-      title: data?.title,
+      id: data.id,
+      start_at: new Date(data.start_at),
+      end_at: new Date(data.end_at),
+      title: data.title,
     },
   })
 
   function handleUpdateReservation(data: any) {
     fn(data, true)
+    setOpen(!open)
   }
 
   return (
-    <Dialog.Portal>
-      <DialogOverlay />
+    <Dialog.Root open={open} onOpenChange={setOpen}>
+      <TooltipComponent label="editar">
+        <Dialog.Trigger asChild>
+          <ActionButton color="yellow">
+            <Pencil size={18} />
+          </ActionButton>
+        </Dialog.Trigger>
+      </TooltipComponent>
+      <Dialog.Portal>
+        <DialogOverlay />
 
-      <DialogContent>
-        <DialogTitle>Editar Pacote</DialogTitle>
+        <DialogContent>
+          <DialogTitle>Editar Pacote</DialogTitle>
 
-        <DialogDescription>
-          Make changes to your profile here. Click save when yore done.
-        </DialogDescription>
+          <DialogDescription>
+            Altere os dados que deseja atualizar.
+          </DialogDescription>
 
-        <form onSubmit={handleSubmit(handleUpdateReservation)}>
-          <Input type="hidden" {...register('id')} />
-
-          <Fieldset>
-            <Label htmlFor="title">Título</Label>
-            <Input type="text" required id="title" {...register('title')} />
-          </Fieldset>
-
-          <Flex css={{ justifyContent: 'space-between' }}>
-            <Fieldset>
-              <Label htmlFor="start_at">Data Inicial</Label>
-              <Input
-                type="date"
-                required
-                id="start_at"
-                {...register('start_at', { valueAsDate: true })}
-              />
-            </Fieldset>
+          <form onSubmit={handleSubmit(handleUpdateReservation)}>
+            <Input type="hidden" {...register('id')} />
 
             <Fieldset>
-              <Label htmlFor="end_at">Data Final</Label>
-              <Input
-                type="date"
-                required
-                id="end_at"
-                {...register('end_at', { valueAsDate: true })}
-              />
+              <Label htmlFor="title">Título</Label>
+              <Input type="text" required id="title" {...register('title')} />
             </Fieldset>
-          </Flex>
 
-          <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
-            <Button type="submit" variant="yellow">
-              Editar
-            </Button>
-          </Flex>
-        </form>
+            <Flex css={{ justifyContent: 'space-between' }}>
+              <Fieldset>
+                <Label htmlFor="start_at">Data Inicial</Label>
+                <Input
+                  type="date"
+                  required
+                  id="start_at"
+                  {...register('start_at', { valueAsDate: true })}
+                />
+              </Fieldset>
 
-        <Dialog.Close asChild>
-          <IconButton aria-label="Close">
-            <X size={18} />
-          </IconButton>
-        </Dialog.Close>
-      </DialogContent>
-    </Dialog.Portal>
+              <Fieldset>
+                <Label htmlFor="end_at">Data Final</Label>
+                <Input
+                  type="date"
+                  required
+                  id="end_at"
+                  {...register('end_at', { valueAsDate: true })}
+                />
+              </Fieldset>
+            </Flex>
+
+            <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
+              <Button type="submit" variant="yellow">
+                Editar
+              </Button>
+            </Flex>
+          </form>
+
+          <Dialog.Close asChild>
+            <IconButton aria-label="Close">
+              <X size={18} />
+            </IconButton>
+          </Dialog.Close>
+        </DialogContent>
+      </Dialog.Portal>
+    </Dialog.Root>
   )
 }
