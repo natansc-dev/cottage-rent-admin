@@ -176,7 +176,7 @@ export function ReservationsTab() {
       >
         <Dialog.Trigger asChild>
           <AddNewReservationButton>
-            Adicionar Nova Reservaa
+            Adicionar Nova Reserva
           </AddNewReservationButton>
         </Dialog.Trigger>
 

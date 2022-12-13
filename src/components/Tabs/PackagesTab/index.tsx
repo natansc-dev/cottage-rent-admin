@@ -31,6 +31,8 @@ import { ActionButton, ActionGroup, Flex } from '../../../styles/global'
 import { TooltipComponent } from '../../Tooltip'
 import { deletePackage } from '../../../services/packages/delete'
 import { NewPackageModal } from '../../NewPackageModal'
+import { EditPackageModal } from '../../EditPackageModal'
+import { updatePackage } from '../../../services/packages/update'
 
 interface PackagesProps {
   id: string
@@ -49,16 +51,9 @@ type FormInputs = z.infer<typeof formSchema>
 
 export function PackagesTab() {
   const navigate = useNavigate()
-  const [open, setOpen] = useState(false)
+  const [openNewPackageModal, setOpenNewPackageModal] = useState(false)
+  const [openEditPackageModal, setOpenEditPackageModal] = useState(false)
   const [packages, setPackages] = useState<PackagesProps[]>([])
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<FormInputs>({
-    resolver: zodResolver(formSchema),
-  })
 
   async function handleCreatePackage(data: any) {
     const response = await createPackage(data)
@@ -89,8 +84,39 @@ export function PackagesTab() {
       })
     }
 
-    reset()
-    setOpen(false)
+    setOpenNewPackageModal(false)
+  }
+
+  async function handleUpdatePackage(data: any, updated: boolean) {
+    if (updated) {
+      const response = await updatePackage(data)
+
+      if (response.status === 200) {
+        toast.success('Pacote foi atualizado com sucesso!', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        })
+
+        setOpenEditPackageModal(false)
+      } else {
+        toast.error(`Ops... Erro: ${response.message}`, {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        })
+      }
+    }
   }
 
   async function handleDeletePackage(id: string) {
@@ -140,13 +166,16 @@ export function PackagesTab() {
 
   useEffect(() => {
     getPackages()
-  }, [])
+  }, [openNewPackageModal, openEditPackageModal])
 
   return (
     <PackageContainer>
       <h1>Lista de Pacotes</h1>
 
-      <Dialog.Root open={open} onOpenChange={setOpen}>
+      <Dialog.Root
+        open={openNewPackageModal}
+        onOpenChange={setOpenNewPackageModal}
+      >
         <Dialog.Trigger asChild>
           <AddNewPackageButton>Adicionar Novo Pacote</AddNewPackageButton>
         </Dialog.Trigger>
@@ -162,9 +191,20 @@ export function PackagesTab() {
                 <h2>{i.title}</h2>
 
                 <ActionGroup>
-                  <ActionButton color="yellow">
-                    <Pencil size={18} />
-                  </ActionButton>
+                  <Dialog.Root
+                    open={openEditPackageModal}
+                    onOpenChange={setOpenEditPackageModal}
+                  >
+                    <TooltipComponent label="editar">
+                      <Dialog.Trigger asChild>
+                        <ActionButton color="yellow">
+                          <Pencil size={18} />
+                        </ActionButton>
+                      </Dialog.Trigger>
+                    </TooltipComponent>
+
+                    <EditPackageModal data={i} fn={handleUpdatePackage} />
+                  </Dialog.Root>
 
                   <AlertDialog.Root>
                     <TooltipComponent label="deletar">
