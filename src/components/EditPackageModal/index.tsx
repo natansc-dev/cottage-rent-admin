@@ -1,5 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog'
-
+import { format } from 'date-fns'
 import { Pencil, X } from 'phosphor-react'
 import {
   ActionButton,
@@ -17,26 +17,27 @@ import {
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ReactNode, useState } from 'react'
+import { useState } from 'react'
 import { TooltipComponent } from '../Tooltip'
 
 const formSchema = z.object({
   id: z.string(),
-  start_at: z.date(),
-  end_at: z.date(),
+  start_at: z.string(),
+  end_at: z.string(),
   title: z.string(),
 })
 
 type FormInputs = z.infer<typeof formSchema>
 
+interface DataProps {
+  id: string
+  start_at: string
+  end_at: string
+  title: string
+}
 interface EditPackageModalProps {
-  data: {
-    id: string
-    start_at: string
-    end_at: string
-    title: string
-  }
-  fn: (data: any, updated: boolean) => void
+  data: DataProps
+  fn: (data: DataProps, updated: boolean) => void
 }
 
 export function EditPackageModal({ data, fn }: EditPackageModalProps) {
@@ -46,13 +47,13 @@ export function EditPackageModal({ data, fn }: EditPackageModalProps) {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+    setValue,
   } = useForm<FormInputs>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       id: data.id,
-      start_at: new Date(data.start_at),
-      end_at: new Date(data.end_at),
+      start_at: format(new Date(data.start_at), 'yyyy-MM-dd'),
+      end_at: format(new Date(data.end_at), 'yyyy-MM-dd'),
       title: data.title,
     },
   })
@@ -71,6 +72,7 @@ export function EditPackageModal({ data, fn }: EditPackageModalProps) {
           </ActionButton>
         </Dialog.Trigger>
       </TooltipComponent>
+
       <Dialog.Portal>
         <DialogOverlay />
 
@@ -96,7 +98,7 @@ export function EditPackageModal({ data, fn }: EditPackageModalProps) {
                   type="date"
                   required
                   id="start_at"
-                  {...register('start_at', { valueAsDate: true })}
+                  {...register('start_at')}
                 />
               </Fieldset>
 
@@ -106,7 +108,7 @@ export function EditPackageModal({ data, fn }: EditPackageModalProps) {
                   type="date"
                   required
                   id="end_at"
-                  {...register('end_at', { valueAsDate: true })}
+                  {...register('end_at')}
                 />
               </Fieldset>
             </Flex>
