@@ -16,15 +16,16 @@ import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { deleteInterest } from '../../services/interests/delete'
+import { format } from 'date-fns'
 
 const formSchema = z.object({
-  start_at: z.date(),
-  end_at: z.date(),
-  name: z.string(),
+  start_at: z.string(),
+  end_at: z.string(),
+  name: z.string().min(3),
   cpf: z.string(),
   rg: z.string(),
   phone: z.string(),
-  email: z.string(),
+  email: z.string().email(),
   cep: z.string(),
   address: z.string(),
   district: z.string(),
@@ -55,6 +56,9 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
     defaultValues: {
       name: data?.name,
       phone: data?.phone,
+      start_at:
+        data?.start_at && format(new Date(data?.start_at), 'yyyy-MM-dd'),
+      end_at: data?.end_at && format(new Date(data?.end_at), 'yyyy-MM-dd'),
     },
   })
 
@@ -80,7 +84,7 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
             <Input type="text" required id="name" {...register('name')} />
           </Fieldset>
 
-          <Flex>
+          <Flex css={{ gap: '1rem' }}>
             <Fieldset>
               <Label htmlFor="rg">RG</Label>
               <Input type="text" required id="rg" {...register('rg')} />
@@ -92,7 +96,7 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
             </Fieldset>
           </Flex>
 
-          <Flex>
+          <Flex css={{ gap: '1rem' }}>
             <Fieldset>
               <Label htmlFor="phone">Telefone</Label>
               <Input type="text" required id="phone" {...register('phone')} />
@@ -100,7 +104,7 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
 
             <Fieldset>
               <Label htmlFor="email">Email</Label>
-              <Input type="text" required id="email" {...register('email')} />
+              <Input type="email" required id="email" {...register('email')} />
             </Fieldset>
           </Flex>
 
@@ -136,18 +140,13 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
                 type="date"
                 required
                 id="start_at"
-                {...register('start_at', { valueAsDate: true })}
+                {...register('start_at')}
               />
             </Fieldset>
 
             <Fieldset>
               <Label htmlFor="end_at">Data Final</Label>
-              <Input
-                type="date"
-                required
-                id="end_at"
-                {...register('end_at', { valueAsDate: true })}
-              />
+              <Input type="date" required id="end_at" {...register('end_at')} />
             </Fieldset>
           </Flex>
 
