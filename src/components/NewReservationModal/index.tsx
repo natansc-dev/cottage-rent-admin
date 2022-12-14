@@ -18,6 +18,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { deleteInterest } from '../../services/interests/delete'
 import { format } from 'date-fns'
 import InputMask from 'react-input-mask'
+import { api } from '../../services/api'
 
 const formSchema = z.object({
   start_at: z.string(),
@@ -71,16 +72,18 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
     }
   }
 
-  function checkCEP(e: any) {
+  async function checkCEP(e: any) {
     const cep = e.target.value.replace(/\D/g, '')
-    console.log(cep)
-    fetch(`https://viacep.com.br/ws/${cep}/json/`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        setValue('address', data.logradouro)
-        setValue('district', data.bairro)
-        setValue('city', data.localidade)
+    await api
+      .get(`https://viacep.com.br/ws/${cep}/json/`)
+      .then((response) => {
+        console.log(response)
+        setValue('address', response.data.logradouro)
+        setValue('district', response.data.bairro)
+        setValue('city', response.data.localidade)
+      })
+      .catch((error) => {
+        console.log(error)
       })
   }
 
@@ -125,7 +128,6 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
                 type="text"
                 mask="+55 (99) 9 9999-9999"
                 maskChar=" "
-                placeholder="(00) 0 0000-000"
                 required
                 {...register('phone')}
               />
