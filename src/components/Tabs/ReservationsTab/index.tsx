@@ -1,5 +1,6 @@
+/* eslint-disable prettier/prettier */
 import { format } from 'date-fns'
-import { Trash, Pencil } from 'phosphor-react'
+import { Trash, Pencil, FileText } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../../../services/api'
@@ -8,7 +9,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 
 import { TooltipComponent } from '../../Tooltip'
 
-import { ActionButton, ActionGroup } from '../../../styles/global'
+import { ActionButton, ActionGroup, Button } from '../../../styles/global'
 
 import {
   AddNewReservationButton,
@@ -26,6 +27,7 @@ import { updateReservation } from '../../../services/reservations/update'
 import { createReservation } from '../../../services/reservations/create'
 import { NewReservationModal } from '../../NewReservationModal'
 import { EditReservationModal } from '../../EditReservationModal'
+import { reservationContract } from '../../../services/reservations/contract'
 
 interface ReservationProps {
   id: string
@@ -149,6 +151,10 @@ export function ReservationsTab() {
     }
   }
 
+  async function handleGenerateContract(id: string) {
+    const response = await reservationContract(id)
+  }
+
   async function getReservations() {
     try {
       const response = await api.get('/reservations')
@@ -212,14 +218,23 @@ export function ReservationsTab() {
                       <AlertDialog.Root>
                         <TooltipComponent label="deletar">
                           <AlertDialog.Trigger asChild>
-                            <ActionButton color="red">
+                            <button className={ActionButton({ color: 'red' })}>
                               <Trash size={18} />
-                            </ActionButton>
+                            </button>
                           </AlertDialog.Trigger>
                         </TooltipComponent>
 
                         <DeleteModal id={i.id} fn={handleDeleteReservation} />
                       </AlertDialog.Root>
+
+                      <TooltipComponent label="criar">
+                        <button
+                          className={ActionButton({ color: 'green' })}
+                          onClick={() => handleGenerateContract(i.id)}
+                        >
+                          <FileText size={18} />
+                        </button>
+                      </TooltipComponent>
                     </ActionGroup>
                   </td>
                 </tr>

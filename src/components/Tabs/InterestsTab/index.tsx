@@ -149,9 +149,9 @@ export function InterestsTap() {
                       <AlertDialog.Root>
                         <TooltipComponent label="deletar">
                           <AlertDialog.Trigger asChild>
-                            <ActionButton color="red">
+                            <button className={ActionButton({ color: 'red' })}>
                               <Trash size={18} />
-                            </ActionButton>
+                            </button>
                           </AlertDialog.Trigger>
                         </TooltipComponent>
 
@@ -161,9 +161,11 @@ export function InterestsTap() {
                       <Dialog.Root open={open} onOpenChange={setOpen}>
                         <TooltipComponent label="criar">
                           <Dialog.Trigger asChild>
-                            <ActionButton color="green">
+                            <button
+                              className={ActionButton({ color: 'green' })}
+                            >
                               <CalendarCheck size={18} />
-                            </ActionButton>
+                            </button>
                           </Dialog.Trigger>
                         </TooltipComponent>
 

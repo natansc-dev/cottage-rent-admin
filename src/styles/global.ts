@@ -1,5 +1,5 @@
 import { styled, keyframes } from '@stitches/react'
-import { globalCss } from '.'
+import { css, globalCss } from '.'
 import { blackA, gray, blue, red, yellow, green } from '@radix-ui/colors'
 import * as Dialog from '@radix-ui/react-dialog'
 
@@ -26,7 +26,7 @@ export const globalStyles = globalCss({
   },
 })
 
-export const ActionButton = styled('button', {
+export const ActionButton = css('button', {
   all: 'unset',
   lineHeight: 0,
   cursor: 'pointer',

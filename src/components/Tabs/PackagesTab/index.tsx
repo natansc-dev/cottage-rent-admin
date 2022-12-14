@@ -194,9 +194,9 @@ export function PackagesTab() {
                   <AlertDialog.Root>
                     <TooltipComponent label="deletar">
                       <AlertDialog.Trigger asChild>
-                        <ActionButton color="red">
+                        <button className={ActionButton({ color: 'red' })}>
                           <Trash size={18} />
-                        </ActionButton>
+                        </button>
                       </AlertDialog.Trigger>
                     </TooltipComponent>
 
