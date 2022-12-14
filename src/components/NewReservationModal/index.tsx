@@ -17,6 +17,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { deleteInterest } from '../../services/interests/delete'
 import { format } from 'date-fns'
+import InputMask from 'react-input-mask'
 
 const formSchema = z.object({
   start_at: z.string(),
@@ -48,6 +49,7 @@ interface NewReservationModalProps {
 export function NewReservationModal({ data, fn }: NewReservationModalProps) {
   const interestId = data?.id
   const {
+    setValue,
     register,
     handleSubmit,
     formState: { errors },
@@ -67,6 +69,19 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
     if (interestId) {
       await deleteInterest(interestId)
     }
+  }
+
+  function checkCEP(e: any) {
+    const cep = e.target.value.replace(/\D/g, '')
+    console.log(cep)
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        setValue('address', data.logradouro)
+        setValue('district', data.bairro)
+        setValue('city', data.localidade)
+      })
   }
 
   return (
@@ -92,14 +107,28 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
 
             <Fieldset>
               <Label htmlFor="cpf">CPF</Label>
-              <Input type="text" required id="cpf" {...register('cpf')} />
+              <InputMask
+                id="cpf"
+                type="text"
+                mask="999.999.999-99"
+                maskChar=" "
+                required
+                {...register('cpf')}
+              />
             </Fieldset>
           </Flex>
 
           <Flex css={{ gap: '1rem' }}>
             <Fieldset>
               <Label htmlFor="phone">Telefone</Label>
-              <Input type="text" required id="phone" {...register('phone')} />
+              <InputMask
+                type="text"
+                mask="+55 (99) 9 9999-9999"
+                maskChar=" "
+                placeholder="(00) 0 0000-000"
+                required
+                {...register('phone')}
+              />
             </Fieldset>
 
             <Fieldset>
@@ -110,7 +139,15 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
 
           <Fieldset>
             <Label htmlFor="cep">CEP</Label>
-            <Input type="text" required id="cep" {...register('cep')} />
+            <InputMask
+              id="cep"
+              type="text"
+              mask="99999-999"
+              maskChar=" "
+              required
+              {...register('cep')}
+              onBlur={checkCEP}
+            />
           </Fieldset>
 
           <Fieldset>

@@ -188,6 +188,20 @@ export const Fieldset = styled('fieldset', {
   flexDirection: 'column',
   gap: 4,
   marginBottom: 15,
+
+  input: {
+    width: '100%',
+    border: 'none',
+    borderRadius: 4,
+    padding: '0 10px',
+    fontSize: '1rem',
+    lineHeight: 1,
+    color: blackA.blackA12,
+    boxShadow: `0 0 0 1px ${blackA.blackA10}`,
+    height: 36,
+
+    '&:focus': { boxShadow: `0 0 0 2px ${blue.blue8}` },
+  },
 })
 
 export const Label = styled('label', {

@@ -1,5 +1,5 @@
 import { styled } from '@stitches/react'
-import { blackA, gray, blue, red, yellow, green } from '@radix-ui/colors'
+import { blackA, gray } from '@radix-ui/colors'
 
 export const InterestedContainer = styled('main', {
   flex: 1,
