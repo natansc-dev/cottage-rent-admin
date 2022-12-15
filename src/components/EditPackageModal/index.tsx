@@ -67,9 +67,9 @@ export function EditPackageModal({ data, fn }: EditPackageModalProps) {
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <TooltipComponent label="editar">
         <Dialog.Trigger asChild>
-          <ActionButton color="yellow">
+          <button className={ActionButton({ color: 'yellow' })}>
             <Pencil size={18} />
-          </ActionButton>
+          </button>
         </Dialog.Trigger>
       </TooltipComponent>
 
