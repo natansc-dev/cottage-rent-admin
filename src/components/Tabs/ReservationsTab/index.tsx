@@ -153,6 +153,10 @@ export function ReservationsTab() {
 
   async function handleGenerateContract(id: string) {
     const response = await reservationContract(id)
+
+    const contract = response.path
+
+    window.open(contract)
   }
 
   async function getReservations() {

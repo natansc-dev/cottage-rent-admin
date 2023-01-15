@@ -4,7 +4,7 @@ export async function reservationContract(id: string) {
   const response = await api
     .post(`/reservations/contract/${id}`)
     .then((response) => {
-      console.log(response)
+      return response.data
     })
     .catch((error) => {
       return {
