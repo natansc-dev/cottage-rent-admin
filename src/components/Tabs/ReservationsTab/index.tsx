@@ -51,7 +51,8 @@ export function ReservationsTab() {
     useState(false)
   const [reservation, setReservation] = useState<ReservationProps[]>([])
 
-  async function handleCreatePackage(data: any) {
+  async function handleCreatePackage(data: any, created: boolean) {
+
     const response = await createReservation(data)
 
     if (response.status === 201) {

@@ -32,6 +32,7 @@ const formSchema = z.object({
   address: z.string(),
   district: z.string(),
   city: z.string(),
+  payment_method: z.string(),
 })
 
 type FormInputs = z.infer<typeof formSchema>
@@ -54,6 +55,7 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormInputs>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -67,6 +69,9 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
 
   async function handleNewReservation(data: any) {
     fn(data, true)
+
+    reset()
+
     if (interestId) {
       await deleteInterest(interestId)
     }
@@ -188,6 +193,16 @@ export function NewReservationModal({ data, fn }: NewReservationModalProps) {
               <Input type="date" required id="end_at" {...register('end_at')} />
             </Fieldset>
           </Flex>
+
+          <Fieldset>
+            <Label htmlFor="payment_method">Forma de Pagamento</Label>
+            <Input
+              type="text"
+              required
+              id="payment_method"
+              {...register('payment_method')}
+            />
+          </Fieldset>
 
           <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
             <Button type="submit">Reservar</Button>

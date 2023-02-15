@@ -33,6 +33,7 @@ const formSchema = z.object({
   address: z.string(),
   district: z.string(),
   city: z.string(),
+  payment_method: z.string(),
 })
 
 type FormInputs = z.infer<typeof formSchema>
@@ -51,6 +52,7 @@ interface EditReservationModalProps {
     address: string
     district: string
     city: string
+    payment_method: string
   }
   fn: (data: any, updated: boolean) => void
 }
@@ -77,6 +79,7 @@ export function EditReservationModal({ data, fn }: EditReservationModalProps) {
       address: data?.address,
       district: data?.district,
       city: data?.city,
+      payment_method: data?.payment_method,
     },
   })
 
@@ -187,6 +190,16 @@ export function EditReservationModal({ data, fn }: EditReservationModalProps) {
                 />
               </Fieldset>
             </Flex>
+
+            <Fieldset>
+              <Label htmlFor="payment_method">Forma de Pagamento</Label>
+              <Input
+                type="text"
+                required
+                id="payment_method"
+                {...register('payment_method')}
+              />
+            </Fieldset>
 
             <Flex css={{ marginTop: 25, justifyContent: 'flex-end' }}>
               <Button type="submit" variant="yellow">
