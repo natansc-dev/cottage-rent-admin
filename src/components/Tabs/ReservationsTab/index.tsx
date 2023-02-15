@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { format } from 'date-fns'
 import { Trash, Pencil, FileText } from 'phosphor-react'
 import { useEffect, useState } from 'react'
@@ -9,7 +8,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 
 import { TooltipComponent } from '../../Tooltip'
 
-import { ActionButton, ActionGroup, Button } from '../../../styles/global'
+import { ActionButton, ActionGroup } from '../../../styles/global'
 
 import {
   AddNewReservationButton,
@@ -42,6 +41,7 @@ interface ReservationProps {
   district: string
   email: string
   rg: string
+  payment_method: string
 }
 
 export function ReservationsTab() {
