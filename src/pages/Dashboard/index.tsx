@@ -14,6 +14,7 @@ import {
   TabsRoot,
   TabsTrigger,
 } from './styles'
+import { useEffect } from 'react'
 
 export function Dashboard() {
   const navigate = useNavigate()
@@ -24,6 +25,12 @@ export function Dashboard() {
 
     navigate('/')
   }
+  
+  useEffect(() => {
+    if (Cookies.get('reactauth.token')) {
+      navigate('/')
+    }
+  }, [])
 
   return (
     <>
