@@ -25,10 +25,13 @@ export function Dashboard() {
 
     navigate('/')
   }
-  
+
   useEffect(() => {
-    if (Cookies.get('reactauth.token')) {
+    const token = Cookies.get('reactauth.token')
+    if (!token) {
       navigate('/')
+    } else {
+      console.log('Bem-vindo ao painel administrativo da Chácara Kairós')
     }
   }, [])
 

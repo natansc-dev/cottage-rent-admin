@@ -42,9 +42,9 @@ export function Login() {
 
   useEffect(() => {
     const token = Cookies.get('reactauth.token')
-    const tokenRefresh = Cookies.get('reactauth.token')
-
-    if (token && tokenRefresh) {
+    if (!token) {
+      console.log('Faça o Login')
+    } else {
       navigate('/dashboard')
     }
   }, [])
